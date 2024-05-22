@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bbc/cadaster.dart';
+import 'package:bbc/index.dart';
+import 'package:bbc/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +22,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Login(),
+      //home: Login(),
+      routes: {
+        '/' : (context) => Index(),
+        '/cadastro' : (context) => Cadaster(),
+        '/login' : (context) => Login(),
+      },
     );
   }
 }

@@ -1,21 +1,20 @@
 // ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
 
 import 'package:bbc/index.dart';
-import 'package:bbc/login.dart';
 import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
 
-class Cadaster extends StatefulWidget {
-  const Cadaster({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<Cadaster> createState() => _CadasterState();
+  State<Login> createState() => _LoginState();
 }
 
-class _CadasterState extends State<Cadaster> {
+class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController(), passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController(), raController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController(); bool manterLog = false;
   List<User> userList = [
     User("joao@gmail.com", "Joao", "Joao", 202235),
     User("enrique@gmail.com", "Enrique", "Enrique", 202207),
@@ -80,7 +79,7 @@ class _CadasterState extends State<Cadaster> {
                         padding: EdgeInsets.all(30),
                         child: Column(
                           children: [
-                            Text("Cadastrar-se", style: TextStyle(color: Colors.white, fontSize: 34)),
+                            Text("Logar-se", style: TextStyle(color: Colors.white, fontSize: 34)),
                             TextField(
                               controller: emailController,
                               decoration: InputDecoration(
@@ -103,55 +102,44 @@ class _CadasterState extends State<Cadaster> {
                                 filled: true,
                                 fillColor: Colors.white,
                               ),
-                            ),
-                            SizedBox(height: 10),
-                            TextField(
-                              obscureText: true,
-                              controller: confirmPasswordController,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                                hintText: "Confirme a senha",
-                                prefixIcon: Icon(Icons.password),
-                                filled: true,
-                                fillColor: Colors.white,
-                              ),
-                            ),
-                            SizedBox(height: 40),
-
-                            Text("Dados Pessoais", style: TextStyle(color: Colors.white, fontSize: 34)),
-                            TextField(
-                              controller: nameController,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                                hintText: "Nome",
-                                prefixIcon: Icon(Icons.abc),
-                                filled: true,
-                                fillColor: Colors.white,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            TextField(
-                              controller: raController,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                                hintText: "RA",
-                                prefixIcon: Icon(Icons.numbers),
-                                filled: true,
-                                fillColor: Colors.white,
-                              ),
-                            ),
+                            ),                                         
                             SizedBox(height: 20),
                             SizedBox(
                               width: 340,
                               child: FloatingActionButton(
                                 onPressed: () => {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login())),
+                                  
                                   setState((){}),
                                 },
                                 backgroundColor: Colors.blue[400],
-                                child: Text("Confirmar", style: TextStyle(color: Colors.white)),
-                              ),
+                                child: Text("Entrar", style: TextStyle(color: Colors.white)),
+                              ),       
                             ),
+                            SizedBox(height: 15,),
+                            
+                              Row( mainAxisAlignment: MainAxisAlignment.start,
+                                children: [ 
+                                  Switch(value: manterLog,
+                                  activeColor: Colors.blue,
+                                  
+                                  onChanged: (value) {
+                                    manterLog = value!;
+                                    setState(() {
+                                      
+                                    });
+                                  },),
+                                  SizedBox(width: 10,),
+                                  Text("Manter Login", style: TextStyle(color: Colors.white),),
+                                  SizedBox(width: 84,),
+                                  
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("Cadastrar-se", style: TextStyle(color: Colors.white, decoration: TextDecoration.underline, decorationColor: Colors.white),),
+                                  ),
+                                ],
+                              )
                           ],
                         ),
                       ),
