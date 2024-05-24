@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bbc/cadaster.dart';
+import 'package:bbc/contact.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/login.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +25,10 @@ class MyApp extends StatelessWidget {
       ),
       //home: Login(),
       routes: {
-        '/' : (context) => Index(),
-        '/cadastro' : (context) => Cadaster(),
-        '/login' : (context) => Login(),
+        '/': (context) => Index(),
+        '/cadastro': (context) => Cadaster(),
+        '/login': (context) => Login(),
+        '/contato': (context) => Contact(),
       },
     );
   }

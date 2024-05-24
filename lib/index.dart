@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:bbc/cadaster.dart';
 import 'package:flutter/material.dart';
 
@@ -13,16 +15,20 @@ class IndexState extends State<Index> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
+        leading: Image.asset(
+          'assets/images/logobbc.png',
+          width: 50,
+        ),
         actions: [
-          IconButton(onPressed: () {
-            Center();
-            Navigator.push(context, MaterialPageRoute(builder: ((context) => Cadaster())));
-          }, icon: Icon(Icons.person))
-          ],
-       centerTitle: true,
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Cadaster())));
+              },
+              icon: Icon(Icons.person))
+        ],
         backgroundColor: Color.fromARGB(255, 24, 24, 26),
-         ),
+      ),
     );
   }
 }
