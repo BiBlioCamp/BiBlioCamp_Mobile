@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, dead_code
 
 import 'package:bbc/index.dart';
 import 'package:bbc/login.dart';
@@ -35,6 +35,25 @@ class _ContactState extends State<Contact> {
         ],
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 24, 24, 26),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        height: 70,
+        color: Color.fromARGB(255, 24, 24, 26),
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          IconButton(onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: ((context) => Index())));
+          }, icon: Icon(Icons.house_outlined, color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            
+          }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            
+          }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Contact())));
+          }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
+        ],),
       ),
       body: Container(
         child: DecoratedBox(
@@ -95,7 +114,8 @@ class _ContactState extends State<Contact> {
                           ),
                           SizedBox(height: 10),
                           TextField(
-                            maxLines: 1,
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
                             controller: messageController,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
@@ -104,9 +124,7 @@ class _ContactState extends State<Contact> {
                                 prefixIcon: Icon(Icons.message),
                                 filled: true,
                                 fillColor: Colors.white,
-                                contentPadding:
-                                    const EdgeInsets.only(bottom: 150)),
-                          ),
+                          ),),
                           SizedBox(height: 20),
                           SizedBox(
                             width: 340,

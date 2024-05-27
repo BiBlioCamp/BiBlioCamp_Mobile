@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
 
+import 'package:bbc/contact.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/login.dart';
 import 'package:bbc/user.dart';
@@ -53,6 +54,25 @@ class _CadasterState extends State<Cadaster> {
         ],
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 24, 24, 26),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        height: 70,
+        color: Color.fromARGB(255, 24, 24, 26),
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          IconButton(onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: ((context) => Index())));
+          }, icon: Icon(Icons.house_outlined, color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            
+          }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            
+          }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Contact())));
+          }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
+        ],),
       ),
       body: Container(
         child: DecoratedBox(
@@ -201,13 +221,6 @@ class _CadasterState extends State<Cadaster> {
               ),
             ),
           ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Color.fromARGB(255, 24, 24, 26),
-        height: 75,
-        child: Row(
-          children: [],
         ),
       ),
     );

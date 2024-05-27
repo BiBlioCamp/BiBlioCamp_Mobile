@@ -48,12 +48,32 @@ class _LoginState extends State<Login> {
               onPressed: () {
                 Center();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Contact())));
+                    MaterialPageRoute(builder: ((context) => Index())));
               },
               icon: Icon(Icons.square))
         ],
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 24, 24, 26),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        height: 70,
+        color: Color.fromARGB(255, 24, 24, 26),
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          IconButton(onPressed: () {
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Index())));
+          }, icon: Icon(Icons.house_outlined, color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            
+          }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            
+          }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Contact())));
+          }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
+        ],),
       ),
       body: Container(
         child: DecoratedBox(
@@ -172,13 +192,6 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Color.fromARGB(255, 24, 24, 26),
-        height: 75,
-        child: Row(
-          children: [],
         ),
       ),
     );
