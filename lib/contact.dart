@@ -42,7 +42,7 @@ class _ContactState extends State<Contact> {
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: ((context) => Index())));
-          }, icon: Icon(Icons.house_outlined, color: Colors.white, size: 40,)),
+          }, icon: Icon(Icons.home_outlined, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
@@ -115,13 +115,12 @@ class _ContactState extends State<Contact> {
                           SizedBox(height: 10),
                           TextField(
                             keyboardType: TextInputType.multiline,
-                            maxLines: null,
+                            maxLines: 5,
                             controller: messageController,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15)),
-                                hintText: "Mensagem",
-                                prefixIcon: Icon(Icons.message),
+                                hintText: "Mensagem:",
                                 filled: true,
                                 fillColor: Colors.white,
                           ),),

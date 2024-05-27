@@ -35,7 +35,7 @@ class IndexState extends State<Index> {
         color: Color.fromARGB(255, 24, 24, 26),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
-          }, icon: Icon(Icons.house, color: Colors.white, size: 40,)),
+          }, icon: Icon(Icons.home, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),

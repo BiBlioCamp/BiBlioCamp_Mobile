@@ -62,7 +62,7 @@ class _LoginState extends State<Login> {
           IconButton(onPressed: () {
             Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Index())));
-          }, icon: Icon(Icons.house_outlined, color: Colors.white, size: 40,)),
+          }, icon: Icon(Icons.home_outlined, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
@@ -153,7 +153,7 @@ class _LoginState extends State<Login> {
                                 value: manterLog,
                                 activeColor: Colors.blue,
                                 onChanged: (value) {
-                                  manterLog = value!;
+                                  manterLog = value;
                                   setState(() {});
                                 },
                               ),

@@ -61,7 +61,7 @@ class _CadasterState extends State<Cadaster> {
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: ((context) => Index())));
-          }, icon: Icon(Icons.house_outlined, color: Colors.white, size: 40,)),
+          }, icon: Icon(Icons.home_outlined, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
