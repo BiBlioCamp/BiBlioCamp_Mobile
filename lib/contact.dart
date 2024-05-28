@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, dead_code
 
+import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/login.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class _ContactState extends State<Contact> {
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Contact())));
+                    MaterialPageRoute(builder: ((context) => Help())));
           }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
         ],),
       ),
@@ -129,10 +130,6 @@ class _ContactState extends State<Contact> {
                             width: 340,
                             child: FloatingActionButton(
                               onPressed: () => {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Login())),
                                 setState(() {}),
                               },
                               backgroundColor: Colors.blue[400],

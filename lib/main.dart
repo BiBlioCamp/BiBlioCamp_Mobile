@@ -2,8 +2,10 @@
 
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/contact.dart';
+import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/login.dart';
+import 'package:bbc/perfil.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
         '/cadastro': (context) => Cadaster(),
         '/login': (context) => Login(),
         '/contato': (context) => Contact(),
+        '/help' : (context) => Help(),
+        'perfil' : (context) => Perfil(),
       },
     );
   }
