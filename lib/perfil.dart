@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:bbc/acervo.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
 import 'package:flutter/material.dart';
@@ -173,11 +174,13 @@ class _PerfilState extends State<Perfil> {
         color: Color.fromARGB(255, 24, 24, 26),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
-          }, icon: Icon(Icons.home, color: Colors.white, size: 40,)),
+          }, icon: Icon(Icons.home_outlined, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Acervo())));
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
+            
             
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {

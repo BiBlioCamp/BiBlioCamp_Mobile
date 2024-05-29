@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:bbc/acervo.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,133 @@ class IndexState extends State<Index> {
         ],
         backgroundColor: Color.fromARGB(255, 24, 24, 26),
       ),
+
+      body: 
+      SingleChildScrollView( child: 
+        Column(
+        children: [
+          Container(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.purple,
+                    Colors.blue,
+                  ],
+                ),
+              ),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(50),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset('assets/images/celular.png.png' , width: 200,),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Bibliocamp", style: TextStyle(color: Colors.white , fontSize: 30, fontWeight: FontWeight.bold),),
+                              Text("A melhor maneira", style: TextStyle(color: Colors.white , fontSize: 18),),
+                              Text("de gerenciar seus", style: TextStyle(color: Colors.white , fontSize: 18),),
+                              Text("livros emprestados", style: TextStyle(color: Colors.white , fontSize: 18),),
+                              Text("da escola!", style: TextStyle(color: Colors.white , fontSize: 18),),
+                              
+                            ],
+                          ),
+                        ],
+                      )
+
+
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          Container(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: Colors.white
+              ),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(30),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset('assets/images/Pessoasx.png', width: 200,)
+                         ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Image.asset('assets/images/Alunosx.png', width: 200,)
+                         ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset('assets/images/LivrosX.png', width: 200,)
+                        ],
+                      ),
+
+                      ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          Container(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.blue,
+                    Colors.purple,
+                  ],
+                ),
+              ),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(50),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                              Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Image.asset('assets/images/diversidadedelivros.png', width: 200,)
+                         ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset('assets/images/maisacesso.png', width: 200,)
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+
+      ),
       bottomNavigationBar: BottomAppBar(
         height: 70,
         color: Color.fromARGB(255, 24, 24, 26),
@@ -37,9 +165,11 @@ class IndexState extends State<Index> {
           IconButton(onPressed: () {
           }, icon: Icon(Icons.home, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Acervo())));
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
+            
             
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
