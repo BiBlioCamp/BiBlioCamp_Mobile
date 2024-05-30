@@ -3,16 +3,19 @@
 import 'package:bbc/acervo.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
+import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
 
 class Perfil extends StatefulWidget {
-  const Perfil({super.key});
+  User aluno = User.empty();
+  Perfil(this.aluno,{super.key});
 
   @override
   State<Perfil> createState() => _PerfilState();
 }
 
 class _PerfilState extends State<Perfil> {
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +65,7 @@ class _PerfilState extends State<Perfil> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Lorem ipsum?", style: TextStyle(color: Colors.white , fontSize: 25, fontWeight: FontWeight.bold),),
+                              Text(widget.aluno.name, style: TextStyle(color: Colors.white , fontSize: 25, fontWeight: FontWeight.bold),),
                               Text("Lorem ipsum?", style: TextStyle(color: Colors.white , fontSize: 15),),
                             SizedBox(height: 40,),
                             SizedBox(

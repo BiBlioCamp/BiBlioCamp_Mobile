@@ -24,4 +24,11 @@ class User {
   get ra => this._ra;
 
   set ra( value) => this._ra = value;
+
+  User.empty(){
+    this._email = "";
+    this._password = "";
+    this._name = "";
+    this._ra = 0;
+  }
 }

@@ -52,6 +52,8 @@ class _CadasterState extends State<Cadaster> {
         mensagemDados = "RA já cadastrado";
         mensagemCad = "";
         break;
+      }else{
+        mensagemCad = "";
       }
     }
   }

@@ -16,27 +16,45 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  GlobalKey<FormState> validatorKey = GlobalKey();
+
   TextEditingController emailController = TextEditingController(),
       passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController(),
       raController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
+  bool existeLog = false;
   bool manterLog = false;
+
+  User aluno = User.empty();
+
+  String mensagemLog = "";
+
   List<User> userList = [
-    User("joao@gmail.com", "Joao", "Joao", 202235),
-    User("enrique@gmail.com", "Enrique", "Enrique", 202207),
-    User("jedson@gmail.com", "Jedson", "Jedson", 202158),
-    User("julya@gmail.com", "Julya", "Julya", 202206),
-    User("gabriel@gmail.com", "Gabriel", "Gabriel", 202238),
+    User("joao@g.unicamp.br", "Joao", "Joao", 202235),
+    User("enrique@g.unicamp.br", "Enrique", "Enrique", 202207),
+    User("jedson@g.unicamp.br", "Jedson", "Jedson", 202158),
+    User("julya@g.unicamp.br", "Julya", "Julya", 202206),
+    User("gabriel@g.unicamp.br", "Gabriel", "Gabriel", 202238),
   ];
 
-  void cleanForm() {}
-
-  void saveUser() {
-    cleanForm();
+  void verificaLogin(){
+      for(var logins in widget.usuarios){
+        if(emailController.text == logins.email && passwordController.text == logins.password){
+          aluno.email = logins.email;
+          aluno.name = logins.name;
+          aluno.password = logins.password;
+          aluno.ra = logins.ra;
+          mensagemLog = "";
+          break;
+        }else{
+        mensagemLog = "Login e/ou senha incorretos";
+      }
+    }
   }
 
-  void showList() {}
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +99,8 @@ class _LoginState extends State<Login> {
         ],),
       ),
       body: Container(
+        child: Form(
+          key: validatorKey,
         child: DecoratedBox(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -112,7 +132,7 @@ class _LoginState extends State<Login> {
                           Text("Logar-se",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 34)),
-                          TextField(
+                          TextFormField(
                             controller: emailController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -122,9 +142,14 @@ class _LoginState extends State<Login> {
                               fillColor: Colors.white,
                               hintText: 'Email',
                             ),
+                            validator: (value) {
+                              if(emailController.text.isEmpty){
+                                return "O campo deve ser informado";
+                              }
+                            },
                           ),
                           SizedBox(height: 10),
-                          TextField(
+                          TextFormField(
                             obscureText: true,
                             controller: passwordController,
                             decoration: InputDecoration(
@@ -135,16 +160,28 @@ class _LoginState extends State<Login> {
                               filled: true,
                               fillColor: Colors.white,
                             ),
+                            validator: (value) {
+                              if(passwordController.text.isEmpty){
+                                return "O campo deve ser informado";
+                              }
+                            },
                           ),
                           SizedBox(height: 20),
+                          Text(mensagemLog,style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.bold,),),
+                          SizedBox(height: 15,),
                           SizedBox(
                             width: 340,
                             child: FloatingActionButton(
                               onPressed: () => {
-                                Navigator.push(
+                                if(validatorKey.currentState!.validate()){
+                                  verificaLogin(),
+                                  if(aluno.email != ""){
+                                    Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Perfil())),
+                                      builder: (context) => Perfil(aluno))), 
+                                  }
+                                },
                                 setState(() {}),
                               },
                               backgroundColor: Colors.blue[400],
@@ -203,6 +240,7 @@ class _LoginState extends State<Login> {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
