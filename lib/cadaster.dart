@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unrelated_type_equality_checks
 
 import 'package:bbc/acervo.dart';
 import 'package:bbc/help.dart';
@@ -15,26 +15,66 @@ class Cadaster extends StatefulWidget {
 }
 
 class _CadasterState extends State<Cadaster> {
+  GlobalKey<FormState> validatorKey = GlobalKey();
+
+  bool verifica = false;
+
+  String mensagemCad = "";
+  String mensagemDados = "";
+
   TextEditingController emailController = TextEditingController(),
       passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController(),
       raController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
   List<User> userList = [
-    User("joao@gmail.com", "Joao", "Joao", 202235),
-    User("enrique@gmail.com", "Enrique", "Enrique", 202207),
-    User("jedson@gmail.com", "Jedson", "Jedson", 202158),
-    User("julya@gmail.com", "Julya", "Julya", 202206),
-    User("gabriel@gmail.com", "Gabriel", "Gabriel", 202238),
+    User("joao@g.unicamp.br", "Joao", "Joao", 202235),
+    User("enrique@g.unicamp.br", "Enrique", "Enrique", 202207),
+    User("jedson@g.unicamp.br", "Jedson", "Jedson", 202158),
+    User("julya@g.unicamp.br", "Julya", "Julya", 202206),
+    User("gabriel@g.unicamp.br", "Gabriel", "Gabriel", 202238),
   ];
 
-  void cleanForm() {}
-
-  void saveUser() {
-    cleanForm();
+  void verificaCad(){
+    for(var users in userList){
+      if(emailController.text == users.email && int.parse(raController.text) == users.ra){
+        verifica = true;
+        mensagemCad = "Email já cadastrado!";
+        mensagemDados = "RA já cadastrado!";
+        break;
+      }else if(emailController.text == users.email){
+        verifica = true;
+        mensagemCad = "Email já cadastrado!";
+        mensagemDados = "";
+      }else if(int.parse(raController.text) == users.ra){
+        verifica = true;
+        mensagemDados = "RA já cadastrado";
+        mensagemCad = "";
+        break;
+      }
+    }
   }
 
-  void showList() {}
+  bool verificaNumber(){
+    List<String> alfabeto = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y",'z'];
+    bool letras = false;
+    for(var L in alfabeto){
+      if(raController.text.toUpperCase().contains(L.toUpperCase())){
+        letras = true;
+        break;
+      }
+    }
+    return letras;
+  }
+
+  void limpar(){
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+    nameController = TextEditingController();
+    raController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +119,9 @@ class _CadasterState extends State<Cadaster> {
         ],),
       ),
       body: Container(
+        child:Form(
+          key: validatorKey,
+
         child: DecoratedBox(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -92,7 +135,7 @@ class _CadasterState extends State<Cadaster> {
           ),
           child: Center(
             child: Padding(
-              padding: EdgeInsets.all(50),
+              padding: EdgeInsets.fromLTRB(50, 10, 50, 0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -110,7 +153,7 @@ class _CadasterState extends State<Cadaster> {
                           Text("Cadastrar-se",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 34)),
-                          TextField(
+                          TextFormField(
                             controller: emailController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -120,9 +163,16 @@ class _CadasterState extends State<Cadaster> {
                               fillColor: Colors.white,
                               hintText: 'Email',
                             ),
+                            validator: (value){
+                              if(emailController.text.isEmpty){
+                                return "O campo deve ser informado";
+                              }else if(emailController.text.contains("@g.unicamp.br") == false){
+                                return "O email deve ser da Unicamp";
+                              }
+                            },
                           ),
                           SizedBox(height: 10),
-                          TextField(
+                          TextFormField(
                             obscureText: true,
                             controller: passwordController,
                             decoration: InputDecoration(
@@ -133,9 +183,16 @@ class _CadasterState extends State<Cadaster> {
                               filled: true,
                               fillColor: Colors.white,
                             ),
+                            validator: (value) {
+                              if(passwordController.text.isEmpty){
+                                return "O campo deve ser informado";
+                              }else if(passwordController.text.length < 5){
+                                return "A senha precisa ter 5 ou mais caracteres";
+                              }
+                            },
                           ),
                           SizedBox(height: 10),
-                          TextField(
+                          TextFormField(
                             obscureText: true,
                             controller: confirmPasswordController,
                             decoration: InputDecoration(
@@ -146,12 +203,21 @@ class _CadasterState extends State<Cadaster> {
                               filled: true,
                               fillColor: Colors.white,
                             ),
+                            validator: (value) {
+                              if(confirmPasswordController.text.isEmpty){
+                                return "O campo deve ser informado";
+                              }else if(confirmPasswordController.text != passwordController.text){
+                                return "Senha distinta";
+                              }
+                            },
                           ),
-                          SizedBox(height: 40),
+                          SizedBox(height: 15),
+                          Text(mensagemCad,style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.bold,),),
+                          SizedBox(height: 5,),
                           Text("Dados Pessoais",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 34)),
-                          TextField(
+                          TextFormField(
                             controller: nameController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -161,9 +227,16 @@ class _CadasterState extends State<Cadaster> {
                               filled: true,
                               fillColor: Colors.white,
                             ),
+                            validator: (value) {
+                              if(nameController.text.isEmpty){
+                                return "O campo deve ser informado";
+                              }else if(nameController.text.length <3){
+                                return "Nome precisa ter 3 ou mais caracteres";
+                              }
+                            },
                           ),
                           SizedBox(height: 10),
-                          TextField(
+                          TextFormField(
                             controller: raController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -173,18 +246,38 @@ class _CadasterState extends State<Cadaster> {
                               filled: true,
                               fillColor: Colors.white,
                             ),
+                            validator: (value) {
+                              if(raController.text.isEmpty){
+                                return "O campo deve ser informado";
+                              }else{
+                                bool letras = verificaNumber();
+                                if(letras == true){
+                                return "O RA deve ser composto apenas por números";
+                              }else if(raController.text.length != 6){
+                                return "O RA deve ter 6 números";
+                              }
+                            }
+                          },
                           ),
-                          SizedBox(height: 20),
+                          SizedBox(height: 15),
+                          Text(mensagemDados,style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.bold,),),
+                          SizedBox(height: 5,),
                           SizedBox(
                             width: 340,
                             child: FloatingActionButton(
                               onPressed: () => {
-                                Navigator.push(
+                                if(validatorKey.currentState!.validate()){
+                                verificaCad(),
+                                if(verifica == false){
+                                  userList.add(User(emailController.text, passwordController.text, nameController.text, int.parse(raController.text))),
+                                  limpar(),
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Login())),
+                                        builder: (context) => Login(userList))),
+                                },},
                                 setState(() {}),
-                              },
+                                },
                               backgroundColor: Colors.blue[400],
                               child: Text("Confirmar",
                                   style: TextStyle(color: Colors.white)),
@@ -203,7 +296,7 @@ class _CadasterState extends State<Cadaster> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => Login(),
+                                          builder: (context) => Login(userList),
                                         ));
                                   },
                                   child: Text(
@@ -227,6 +320,7 @@ class _CadasterState extends State<Cadaster> {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

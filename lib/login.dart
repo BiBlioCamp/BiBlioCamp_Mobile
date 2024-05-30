@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, must_be_immutable
 
 import 'package:bbc/acervo.dart';
 import 'package:bbc/help.dart';
@@ -8,7 +8,8 @@ import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
+  List<User> usuarios = [];
+  Login(this.usuarios, {super.key});
 
   @override
   State<Login> createState() => _LoginState();
