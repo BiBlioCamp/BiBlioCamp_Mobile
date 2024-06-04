@@ -3,6 +3,7 @@
 import 'package:bbc/acervo.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
+import 'package:bbc/index.dart';
 import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
 
@@ -177,6 +178,8 @@ class _PerfilState extends State<Perfil> {
         color: Color.fromARGB(255, 24, 24, 26),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Index())));
           }, icon: Icon(Icons.home_outlined, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             Navigator.push(context,
@@ -190,6 +193,8 @@ class _PerfilState extends State<Perfil> {
             Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Help())));
           }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+          }, icon: Icon(Icons.person,color: Colors.white, size: 40,)),
         ],),
       ),
     );

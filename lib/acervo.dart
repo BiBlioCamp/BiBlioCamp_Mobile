@@ -3,6 +3,8 @@
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
+import 'package:bbc/perfil.dart';
+import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
 
 class Acervo extends StatefulWidget {
@@ -335,6 +337,10 @@ bottomNavigationBar: BottomAppBar(
             Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Help())));
           }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Perfil(User("","","User",0)))));
+          }, icon: Icon(Icons.person_outlined,color: Colors.white, size: 40,)),
         ],),
       ),
     );
