@@ -42,19 +42,18 @@ class _CadasterState extends State<Cadaster> {
       if (emailController.text == users.email &&
           int.parse(raController.text) == users.ra) {
         verifica = true;
-        mensagemCad = "Email já cadastrado!";
-        mensagemDados = "RA já cadastrado!";
+        mensagemCad = "Email e RA já cadastrados!";
         break;
       } else if (emailController.text == users.email) {
         verifica = true;
         mensagemCad = "Email já cadastrado!";
-        mensagemDados = "";
+        break;
       } else if (int.parse(raController.text) == users.ra) {
         verifica = true;
-        mensagemDados = "RA já cadastrado";
-        mensagemCad = "";
+        mensagemCad = "RA já cadastrado!";
         break;
       } else {
+        verifica = false;
         mensagemCad = "";
       }
     }
@@ -203,7 +202,7 @@ class _CadasterState extends State<Cadaster> {
             ),
             child: Center(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(50, 20, 50, 138),
+                padding: EdgeInsets.fromLTRB(50, 50, 50, 130),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -230,6 +229,7 @@ class _CadasterState extends State<Cadaster> {
                                 filled: true,
                                 fillColor: Colors.white,
                                 hintText: 'Email',
+                                errorStyle: TextStyle(color: Colors.white,),
                               ),
                               validator: (value) {
                                 if (emailController.text.isEmpty) {
@@ -252,6 +252,7 @@ class _CadasterState extends State<Cadaster> {
                                 prefixIcon: Icon(Icons.password),
                                 filled: true,
                                 fillColor: Colors.white,
+                                errorStyle: TextStyle(color: Colors.white),
                               ),
                               validator: (value) {
                                 if (passwordController.text.isEmpty) {
@@ -272,6 +273,7 @@ class _CadasterState extends State<Cadaster> {
                                 prefixIcon: Icon(Icons.password),
                                 filled: true,
                                 fillColor: Colors.white,
+                                errorStyle: TextStyle(color: Colors.white),
                               ),
                               validator: (value) {
                                 if (confirmPasswordController.text.isEmpty) {
@@ -282,17 +284,8 @@ class _CadasterState extends State<Cadaster> {
                                 }
                               },
                             ),
-                            SizedBox(height: 15),
-                            Text(
-                              mensagemCad,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                             SizedBox(
-                              height: 5,
+                              height: 20,
                             ),
                             Text("Dados Pessoais",
                                 style: TextStyle(
@@ -306,6 +299,7 @@ class _CadasterState extends State<Cadaster> {
                                 prefixIcon: Icon(Icons.abc),
                                 filled: true,
                                 fillColor: Colors.white,
+                                errorStyle: TextStyle(color: Colors.white),
                               ),
                               validator: (value) {
                                 if (nameController.text.isEmpty) {
@@ -325,6 +319,7 @@ class _CadasterState extends State<Cadaster> {
                                 prefixIcon: Icon(Icons.numbers),
                                 filled: true,
                                 fillColor: Colors.white,
+                                errorStyle: TextStyle(color: Colors.white),
                               ),
                               validator: (value) {
                                 if (raController.text.isEmpty) {
@@ -341,7 +336,7 @@ class _CadasterState extends State<Cadaster> {
                             ),
                             SizedBox(height: 15),
                             Text(
-                              mensagemDados,
+                              mensagemCad,
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.white,

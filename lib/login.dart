@@ -145,6 +145,7 @@ class _LoginState extends State<Login> {
                               filled: true,
                               fillColor: Colors.white,
                               hintText: 'Email',
+                              errorStyle: TextStyle(color: Colors.white),
                             ),
                             validator: (value) {
                               if(emailController.text.isEmpty){
@@ -163,6 +164,7 @@ class _LoginState extends State<Login> {
                               prefixIcon: Icon(Icons.password),
                               filled: true,
                               fillColor: Colors.white,
+                              errorStyle: TextStyle(color: Colors.white,),
                             ),
                             validator: (value) {
                               if(passwordController.text.isEmpty){
