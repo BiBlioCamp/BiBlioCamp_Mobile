@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:bbc/acervo.dart';
+import 'package:bbc/alocation.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/perfil.dart';
@@ -85,7 +86,7 @@ class IndexState extends State<Index> {
           Container(
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: Colors.white
+                color: Color.fromARGB(255, 24, 24, 26),
               ),
               child: Center(
                 child: Padding(
@@ -165,14 +166,14 @@ class IndexState extends State<Index> {
         color: Color.fromARGB(255, 24, 24, 26),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
-          }, icon: Icon(Icons.home, color: Colors.white, size: 40,)),
+          }, icon: Icon(Icons.info, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Acervo())));
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            
-            
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Alocation())));
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             Navigator.push(context,

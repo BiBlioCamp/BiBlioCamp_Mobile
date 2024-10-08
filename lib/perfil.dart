@@ -176,25 +176,11 @@ class _PerfilState extends State<Perfil> {
       bottomNavigationBar: BottomAppBar(
         height: 70,
         color: Color.fromARGB(255, 24, 24, 26),
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           IconButton(onPressed: () {
             Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Index())));
-          }, icon: Icon(Icons.home_outlined, color: Colors.white, size: 40,)),
-          IconButton(onPressed: () {
-            Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Acervo())));
-          }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
-          IconButton(onPressed: () {
-            
-            
-          }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
-          IconButton(onPressed: () {
-            Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Help())));
-          }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
-          IconButton(onPressed: () {
-          }, icon: Icon(Icons.person,color: Colors.white, size: 40,)),
+          }, icon: Icon(Icons.info_outlined, color: Colors.white, size: 40,)),
         ],),
       ),
     );

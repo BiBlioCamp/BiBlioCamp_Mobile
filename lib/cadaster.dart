@@ -202,7 +202,7 @@ class _CadasterState extends State<Cadaster> {
             ),
             child: Center(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(50, 50, 50, 130),
+                padding: EdgeInsets.fromLTRB(50, 114.5, 50, 114.5),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -393,7 +393,7 @@ class _CadasterState extends State<Cadaster> {
                                           ));
                                     },
                                     child: Text(
-                                      "Ja tem conta",
+                                      "Já é cadastrado  ",
                                       style: TextStyle(
                                           color: Colors.white,
                                           decoration: TextDecoration.underline,

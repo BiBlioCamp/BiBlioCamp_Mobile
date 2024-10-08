@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bbc/acervo.dart';
+import 'package:bbc/alocation.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/contact.dart';
 import 'package:bbc/help.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/help' : (context) => Help(),
         '/perfil' : (context) => Perfil(User.empty()),
         '/acervo' : (context) => Acervo(),
+        '/alocation' : (context) => Alocation()
       },
     );
   }

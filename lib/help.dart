@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:bbc/acervo.dart';
+import 'package:bbc/alocation.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/contact.dart';
 import 'package:bbc/index.dart';
@@ -202,16 +203,17 @@ class _HelpState extends State<Help> {
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: ((context) => Index())));
-          }, icon: Icon(Icons.home_outlined, color: Colors.white, size: 40,)),
+          }, icon: Icon(Icons.info_outlined, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Acervo())));
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            
-            
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Alocation())));
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
+            
           }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             Navigator.push(context,

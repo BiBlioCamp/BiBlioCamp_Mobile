@@ -226,7 +226,7 @@ class _LoginState extends State<Login> {
                                     Navigator.pop(context);
                                   },
                                   child: Text(
-                                    "Cadastrar-se",
+                                    "Cadastre-se",
                                     style: TextStyle(
                                         color: Colors.white,
                                         decoration: TextDecoration.underline,

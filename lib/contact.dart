@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, dead_code
 
 import 'package:bbc/acervo.dart';
+import 'package:bbc/alocation.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/perfil.dart';
@@ -51,8 +52,8 @@ class _ContactState extends State<Contact> {
                     MaterialPageRoute(builder: ((context) => Acervo())));
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            
-            
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Alocation())));
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             Navigator.push(context,

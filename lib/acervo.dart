@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:bbc/alocation.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
@@ -89,7 +90,7 @@ List<String> list = <String>['Romance', 'Aventura', 'Ação', 'Terror'];
           Container(
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: Colors.white
+                color: Color.fromARGB(255, 24, 24, 26),
               ),
               child: Center(
                 child: Padding(
@@ -98,79 +99,7 @@ List<String> list = <String>['Romance', 'Aventura', 'Ação', 'Terror'];
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
-
-              SizedBox(height: 40,),
-              Row(
-                children: [
-                  Text("Categoria" , style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
-                ],
-              ),
-              Row(
-                children: [
-                  DropdownButton<String>(
-                  value: dropdownValue,
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  onChanged: (String? value) {
-                    // This is called when the user selects an item.
-                    setState(() {
-                      dropdownValue = value!;
-                    });
-                  },
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  ),
-                ],
-              ),
-            
-SizedBox(height: 40,),
-
-
-      Row(
-        children: [
-          Text("Subcategoria", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-              DropdownButton<String>(
-              value: dropdownValue,
-              icon: const Icon(Icons.arrow_downward),
-              elevation: 16,
-              style: const TextStyle(color: Colors.deepPurple),
-              underline: Container(
-                height: 2,
-                color: Colors.deepPurpleAccent,
-              ),
-              onChanged: (String? value) {
-                // This is called when the user selects an item.
-                setState(() {
-                  dropdownValue = value!;
-                });
-              },
-              items: list.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-          ),
-        ],
-      ),
-
-
-
-SizedBox(height: 50,),
+SizedBox(height: 25,),
             
             SearchAnchor(
               builder: (BuildContext context, SearchController controller) {
@@ -211,16 +140,16 @@ SizedBox(height: 50,),
                       Column(children: [
 
                        Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
                       ],),
                       
                       SizedBox(width: 50,),
 
                       Column(children: [
                         Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
                       ],)],),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 35,),
 
                       Row(
                         
@@ -230,16 +159,16 @@ SizedBox(height: 50,),
                       Column(children: [
 
                        Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
                       ],),
                       
                       SizedBox(width: 50,),
 
                       Column(children: [
                         Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
                       ],)],),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 35,),
 
                       Row(
                         
@@ -249,16 +178,16 @@ SizedBox(height: 50,),
                       Column(children: [
 
                        Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
                       ],),
                       
                       SizedBox(width: 50,),
 
                       Column(children: [
                         Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
                       ],)],),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 35,),
 
                       Row(
                         
@@ -268,16 +197,16 @@ SizedBox(height: 50,),
                       Column(children: [
 
                        Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
                       ],),
                       
                       SizedBox(width: 50,),
 
                       Column(children: [
                         Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
                       ],)],),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 35,),
 
                    ],
                   ),
@@ -326,12 +255,13 @@ bottomNavigationBar: BottomAppBar(
                     MaterialPageRoute(builder: ((context) => Index())));
 
 
-          }, icon: Icon(Icons.home_outlined, color: Colors.white, size: 40,)),
+          }, icon: Icon(Icons.info_outline, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             
           }, icon: Icon(Icons.menu_book_rounded,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Alocation())));
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             Navigator.push(context,
