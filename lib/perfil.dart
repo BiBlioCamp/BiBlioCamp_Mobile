@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_import
 
 import 'package:bbc/acervo.dart';
 import 'package:bbc/cadaster.dart';
@@ -6,19 +6,32 @@ import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Perfil extends StatefulWidget {
-  User aluno = User.empty();
-  Perfil(this.aluno,{super.key});
+  Perfil({super.key});
 
   @override
   State<Perfil> createState() => _PerfilState();
 }
 
 class _PerfilState extends State<Perfil> {
+
+  String? savedName;
+  String? savedId;
+
+
+  Future<void> _loadSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedName = prefs.getString('name');
+      savedId = prefs.getString('id');
+    });
+  }
  
   @override
   Widget build(BuildContext context) {
+    _loadSessionData();
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset(
@@ -66,7 +79,7 @@ class _PerfilState extends State<Perfil> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(widget.aluno.name, style: TextStyle(color: Colors.white , fontSize: 25, fontWeight: FontWeight.bold),),
+                              Text(savedName.toString(), style: TextStyle(color: Colors.white , fontSize: 25, fontWeight: FontWeight.bold),),
                               Text("Lorem ipsum?", style: TextStyle(color: Colors.white , fontSize: 15),),
                             SizedBox(height: 40,),
                             SizedBox(

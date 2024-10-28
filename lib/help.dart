@@ -217,7 +217,7 @@ class _HelpState extends State<Help> {
           }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Perfil(User("","","User",0)))));
+                    MaterialPageRoute(builder: ((context) => Perfil())));
           }, icon: Icon(Icons.person_outlined,color: Colors.white, size: 40,)),
         ],),
       ),

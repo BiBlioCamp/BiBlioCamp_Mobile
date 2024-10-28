@@ -1,15 +1,18 @@
-// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, must_be_immutable
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, must_be_immutable, unused_element, unused_import
 
 import 'package:bbc/acervo.dart';
+import 'package:bbc/class/account.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/perfil.dart';
 import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Login extends StatefulWidget {
-  List<User> usuarios = [];
-  Login(this.usuarios, {super.key});
+  Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
@@ -28,9 +31,12 @@ class _LoginState extends State<Login> {
   bool existeLog = false;
   bool manterLog = false;
 
-  User aluno = User.empty();
-
+  String dados = "";
   String mensagemLog = "";
+  String? savedName;
+  String? savedId;
+
+  Account acc = Account();
 
   List<User> userList = [
     User("joao@g.unicamp.br", "Joao", "Joao", 202235),
@@ -40,24 +46,58 @@ class _LoginState extends State<Login> {
     User("gabriel@g.unicamp.br", "Gabriel", "Gabriel", 202238),
   ];
 
-  void verificaLogin(){
-      for(var logins in widget.usuarios){
-        if(emailController.text == logins.email && passwordController.text == logins.password){
-          aluno.email = logins.email;
-          aluno.name = logins.name;
-          aluno.password = logins.password;
-          aluno.ra = logins.ra;
-          mensagemLog = "";
-          break;
-        }else{
-        mensagemLog = "Login e/ou senha incorretos";
-      }
+  Future<void> requisicao() async{
+   var url = Uri.parse('http://localhost:8080/Account/select/' + emailController.text + '/' + passwordController.text);
+    http.Response response = await http.get(url);
+    dados = response.body;
+    Map<String, dynamic> formatedData = jsonDecode(dados);
+    acc = Account.fromJson(formatedData);
+    if(response.statusCode==200){
+        setState(() {
+          _saveSessionData();
+          Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Perfil())));
+        });
     }
+  }
+  
+
+   Future<void> _saveSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('name', acc.name);
+    await prefs.setString('id', acc.id.toString());
+
+    setState(() {
+      savedName = acc.name;
+      savedId = acc.id.toString();
+    });
+  }
+
+  Future<void> _loadSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedName = prefs.getString('name');
+      savedId = prefs.getString('id');
+    });
+  }
+
+  Future<void> _clearSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('name');
+    await prefs.remove('id');
+
+    setState(() {
+      savedName = null;
+      savedId = null;
+    });
   }
 
 
   @override
   Widget build(BuildContext context) {
+
+    _loadSessionData();
+
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset(
@@ -97,8 +137,7 @@ class _LoginState extends State<Login> {
                     MaterialPageRoute(builder: ((context) => Help())));
           }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Perfil(User("","","User",0)))));
+
           }, icon: Icon(Icons.person_outlined,color: Colors.white, size: 40,)),
         ],),
       ),
@@ -180,13 +219,7 @@ class _LoginState extends State<Login> {
                             child: FloatingActionButton(
                               onPressed: () => {
                                 if(validatorKey.currentState!.validate()){
-                                  verificaLogin(),
-                                  if(aluno.email != ""){
-                                    Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Perfil(aluno))), 
-                                  }
+                                requisicao(),
                                 },
                                 setState(() {}),
                               },

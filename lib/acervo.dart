@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unused_local_variable
 
 import 'package:bbc/alocation.dart';
 import 'package:bbc/cadaster.dart';
@@ -269,7 +269,7 @@ bottomNavigationBar: BottomAppBar(
           }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Perfil(User("","","User",0)))));
+                    MaterialPageRoute(builder: ((context) => Perfil())));
           }, icon: Icon(Icons.person_outlined,color: Colors.white, size: 40,)),
         ],),
       ),

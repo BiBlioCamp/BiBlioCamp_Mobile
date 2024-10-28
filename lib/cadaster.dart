@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unrelated_type_equality_checks
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unrelated_type_equality_checks, use_build_context_synchronously
 
 import 'package:bbc/acervo.dart';
 import 'package:bbc/help.dart';
@@ -128,7 +128,7 @@ class _CadasterState extends State<Cadaster> {
 
     if(response.statusCode == 200){
       Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => Login(userList))));
+                      MaterialPageRoute(builder: ((context) => Login())));
     }
   }
 
@@ -201,7 +201,7 @@ class _CadasterState extends State<Cadaster> {
                       context,
                       MaterialPageRoute(
                           builder: ((context) =>
-                              Perfil(User("", "", "User", 0)))));
+                              Perfil())));
                 },
                 icon: Icon(
                   Icons.person_outlined,
@@ -405,7 +405,7 @@ class _CadasterState extends State<Cadaster> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                Login(userList),
+                                                Login(),
                                           ));
                                     },
                                     child: Text(
