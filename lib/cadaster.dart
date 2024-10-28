@@ -7,6 +7,8 @@ import 'package:bbc/login.dart';
 import 'package:bbc/perfil.dart';
 import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Cadaster extends StatefulWidget {
   const Cadaster({super.key});
@@ -104,6 +106,30 @@ class _CadasterState extends State<Cadaster> {
     confirmPasswordController = TextEditingController();
     nameController = TextEditingController();
     raController = TextEditingController();
+  }
+
+  Future<void> salvarAluno() async{
+    var url = Uri.parse("http://localhost:8080/Account/insert");
+    var response = await http.post(
+      url,
+      headers: {'Content-Type':'application/json; charset=UTF-8'},
+      body: jsonEncode(
+        {
+          "id": raController.text,
+          "name": nameController.text,
+          "email": emailController.text,
+          "password": passwordController.text,
+          "username": nameController.text,
+          "active": 1,
+          "type": 1,
+        }
+      )
+    );
+
+    if(response.statusCode == 200){
+      Navigator.push(context,
+                      MaterialPageRoute(builder: ((context) => Login(userList))));
+    }
   }
 
   @override
@@ -355,17 +381,7 @@ class _CadasterState extends State<Cadaster> {
                                       verificaCad(),
                                       if (verifica == false)
                                         {
-                                          userList.add(User(
-                                              emailController.text,
-                                              passwordController.text,
-                                              nameController.text,
-                                              int.parse(raController.text))),
-                                          limpar(),
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Login(userList))),
+                                          salvarAluno(),
                                         },
                                     },
                                   setState(() {}),
