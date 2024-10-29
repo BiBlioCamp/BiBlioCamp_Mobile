@@ -1,10 +1,12 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:bbc/acervo.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/perfil.dart';
-import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Alocation extends StatefulWidget {
   const Alocation({super.key});
@@ -14,10 +16,22 @@ class Alocation extends StatefulWidget {
 }
 
 class _AlocationState extends State<Alocation> {
+
+String? savedName;
+String? savedId;
+
+Future<void> _loadSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedName = prefs.getString('name');
+      savedId = prefs.getString('id');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _loadSessionData();
     return Scaffold(
-
       appBar: AppBar(
         leading: Image.asset(
           'assets/images/logobbc.png',
@@ -27,7 +41,7 @@ class _AlocationState extends State<Alocation> {
           IconButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Cadaster())));
+                    MaterialPageRoute(builder: ((context) => Perfil())));
               },
               icon: Icon(Icons.person))
         ],
@@ -45,35 +59,34 @@ class _AlocationState extends State<Alocation> {
 Column(children: [
 
     Container(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(
-                  width: 3.0
-                                  ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10.0) //                 <--- border radius here
-                                              ),
-              ),
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.all(50),
-
-                  child: Column(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+            color: Colors.black,
+            border: Border.all(
+              width: 3.0
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10.0) //<--- border radius here
+            ),
+          ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(50),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                              Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("ALOCAÇÕES", style: TextStyle(color: Colors.red, fontSize: 50),)
-                         ],
-                      ),
+                      Text("ALOCAÇÕES", style: TextStyle(color: Colors.red, fontSize: 50),)
                     ],
                   ),
-                ),
+                ],
               ),
             ),
           ),
+        ),
+      ),
 SizedBox(height: 20,),
 
     Container(

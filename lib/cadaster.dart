@@ -170,8 +170,6 @@ class _CadasterState extends State<Cadaster> {
                 )),
             IconButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => Acervo())));
                 },
                 icon: Icon(
                   Icons.book,
@@ -197,11 +195,6 @@ class _CadasterState extends State<Cadaster> {
                 )),
             IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) =>
-                              Perfil())));
                 },
                 icon: Icon(
                   Icons.person_outlined,

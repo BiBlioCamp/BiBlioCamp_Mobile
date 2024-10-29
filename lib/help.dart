@@ -6,8 +6,8 @@ import 'package:bbc/cadaster.dart';
 import 'package:bbc/contact.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/perfil.dart';
-import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Help extends StatefulWidget {
   const Help({super.key});
@@ -17,8 +17,21 @@ class Help extends StatefulWidget {
 }
 
 class _HelpState extends State<Help> {
+
+  String? savedName;
+  String? savedId;
+
+  Future<void> _loadSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedName = prefs.getString('name');
+      savedId = prefs.getString('id');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _loadSessionData();
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset(
@@ -28,8 +41,13 @@ class _HelpState extends State<Help> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Cadaster())));
+                if(savedId == null || savedName == null){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Cadaster())));  
+                }else{
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Perfil())));
+                }
               },
               icon: Icon(Icons.person))
         ],
@@ -205,19 +223,31 @@ class _HelpState extends State<Help> {
             Navigator.push(context, MaterialPageRoute(builder: ((context) => Index())));
           }, icon: Icon(Icons.info_outlined, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            Navigator.push(context,
+            if(savedId == null || savedName == null){
+
+            }else{
+              Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Acervo())));
+            }
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            Navigator.push(context,
+            if(savedId == null || savedName == null){
+
+            }else{
+              Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Alocation())));
+            }
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             
           }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            Navigator.push(context,
+            if(savedId == null || savedName == null){
+
+            }else{
+              Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Perfil())));
+            }
           }, icon: Icon(Icons.person_outlined,color: Colors.white, size: 40,)),
         ],),
       ),

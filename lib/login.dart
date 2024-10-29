@@ -58,6 +58,8 @@ class _LoginState extends State<Login> {
           Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Perfil())));
         });
+    }else{
+      mensagemLog = "Conta não encontrada!";
     }
   }
   
@@ -95,9 +97,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-
-    _loadSessionData();
-
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset(
@@ -107,7 +106,6 @@ class _LoginState extends State<Login> {
         actions: [
           IconButton(
               onPressed: () {
-                Center();
                 Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Index())));
               },
@@ -125,11 +123,9 @@ class _LoginState extends State<Login> {
                     MaterialPageRoute(builder: ((context) => Index())));
           }, icon: Icon(Icons.home_outlined, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Acervo())));
+
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            
             
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {

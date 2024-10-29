@@ -5,8 +5,8 @@ import 'package:bbc/alocation.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/perfil.dart';
-import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Index extends StatefulWidget {
   const Index({super.key});
@@ -16,8 +16,20 @@ class Index extends StatefulWidget {
 }
 
 class IndexState extends State<Index> {
+
+  String? savedName;
+  String? savedId;
+
+  Future<void> _loadSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedName = prefs.getString('name');
+      savedId = prefs.getString('id');
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    _loadSessionData();
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset(
@@ -27,8 +39,13 @@ class IndexState extends State<Index> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context,
+                if(savedId == null || savedName == null){
+                  Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Cadaster())));
+                }else{
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Perfil())));
+                }
               },
               icon: Icon(Icons.person))
         ],
@@ -168,20 +185,32 @@ class IndexState extends State<Index> {
           IconButton(onPressed: () {
           }, icon: Icon(Icons.info, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            Navigator.push(context,
+            if(savedName == null || savedId == null){
+
+            }else{
+              Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Acervo())));
+            }
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            Navigator.push(context,
+            if(savedId == null || savedName == null){
+
+            }else{
+              Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Alocation())));
+            }
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Help())));
           }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
+            if(savedId == null || savedName == null){
+
+            }else{
             Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Perfil())));
+            }
           }, icon: Icon(Icons.person_outlined,color: Colors.white, size: 40,)),
         ],),
       ),

@@ -5,8 +5,8 @@ import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/perfil.dart';
-import 'package:bbc/user.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Acervo extends StatefulWidget {
   const Acervo({super.key});
@@ -19,11 +19,23 @@ class _AcervoState extends State<Acervo> {
 
 List<String> list = <String>['Romance', 'Aventura', 'Ação', 'Terror'];
 
+String? savedName;
+String? savedId;
+
+Future<void> _loadSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedName = prefs.getString('name');
+      savedId = prefs.getString('id');
+    });
+  }
+
 
 
   @override
   Widget build(BuildContext context) {
     String dropdownValue = list.first;
+    _loadSessionData();
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset(
@@ -34,7 +46,7 @@ List<String> list = <String>['Romance', 'Aventura', 'Ação', 'Terror'];
           IconButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Cadaster())));
+                    MaterialPageRoute(builder: ((context) => Perfil())));
               },
               icon: Icon(Icons.person))
         ],
@@ -253,8 +265,6 @@ bottomNavigationBar: BottomAppBar(
           IconButton(onPressed: () {
               Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Index())));
-
-
           }, icon: Icon(Icons.info_outline, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             
