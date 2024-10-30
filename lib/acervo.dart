@@ -2,11 +2,15 @@
 
 import 'package:bbc/alocation.dart';
 import 'package:bbc/cadaster.dart';
+import 'package:bbc/class/book.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/perfil.dart';
+import 'package:bbc/repository/bookRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Acervo extends StatefulWidget {
   const Acervo({super.key});
@@ -17,12 +21,17 @@ class Acervo extends StatefulWidget {
 
 class _AcervoState extends State<Acervo> {
 
-List<String> list = <String>['Romance', 'Aventura', 'Ação', 'Terror'];
+  List<String> list = <String>['Romance', 'Aventura', 'Ação', 'Terror'];
 
-String? savedName;
-String? savedId;
+  Book book = Book();
+  BookRepository bookRepository = BookRepository();
 
-Future<void> _loadSessionData() async {
+  String? savedName;
+  String? savedId;
+
+  List<Map<String, dynamic>> livros = [];
+
+  Future<void> _loadSessionData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       savedName = prefs.getString('name');
@@ -30,12 +39,19 @@ Future<void> _loadSessionData() async {
     });
   }
 
-
+  Future<void> carregaLivros() async{
+    var url = Uri.parse("http://localhost:8080/Book/todos");
+    http.Response response = await http.get(url);
+    if(response.statusCode == 200){
+      
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     String dropdownValue = list.first;
     _loadSessionData();
+    carregaLivros();
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset(

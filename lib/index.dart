@@ -27,6 +27,7 @@ class IndexState extends State<Index> {
       savedId = prefs.getString('id');
     });
   }
+  
   @override
   Widget build(BuildContext context) {
     _loadSessionData();
