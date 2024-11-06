@@ -135,6 +135,8 @@ class _CadasterState extends State<Cadaster> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      backgroundColor: Colors.blue,
       appBar: AppBar(
         leading: Image.asset(
           'assets/images/logobbc.png',

@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:bbc/acervo.dart';
-import 'package:bbc/alocation.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/contact.dart';
 import 'package:bbc/index.dart';
@@ -229,13 +228,12 @@ class _HelpState extends State<Help> {
               Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Acervo())));
             }
-          }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
+          }, icon: Icon(Icons.book_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             if(savedId == null || savedName == null){
 
             }else{
-              Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Alocation())));
+
             }
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {

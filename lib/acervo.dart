@@ -1,35 +1,73 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable
-
-import 'package:bbc/alocation.dart';
-import 'package:bbc/cadaster.dart';
 import 'package:bbc/class/book.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/perfil.dart';
 import 'package:bbc/repository/bookRepository.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'package:bbc/bookdetailpage.dart';
 
 class Acervo extends StatefulWidget {
-  const Acervo({super.key});
+  const Acervo({Key? key}) : super(key: key);
 
   @override
   State<Acervo> createState() => _AcervoState();
 }
 
 class _AcervoState extends State<Acervo> {
-
-  List<String> list = <String>['Romance', 'Aventura', 'Ação', 'Terror'];
-
-  Book book = Book();
   BookRepository bookRepository = BookRepository();
+  List<Book> livrosExibidos = [];
+  final TextEditingController _searchController = TextEditingController();
+  late Future<void> livrosCarregados;
 
+  int bookId = 0;
+  String? savedBookId;
   String? savedName;
   String? savedId;
 
-  List<Map<String, dynamic>> livros = [];
+  Future<void> carregaLivros() async {
+    try {
+      var url = Uri.parse("http://localhost:8080/Book/todos");
+      http.Response response = await http.get(url);
+      if (response.statusCode == 200) {
+        List bookList = jsonDecode(utf8.decode(response.bodyBytes)) as List;
+        bookRepository.listaBook = bookList.map((book) => Book.fromJson(book)).toList();
+        setState(() {
+          livrosExibidos = bookRepository.listaBook;
+        });
+        print("Livros carregados com sucesso: ${livrosExibidos.length}");
+      } else {
+        print("Erro ao carregar livros: Código ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Erro ao carregar livros: $e");
+    }
+  }
+
+  Future<void> incrementarAcessos(int bookId) async {
+    try {
+      var url = Uri.parse("http://localhost:8080/Book/updateAcesses/$bookId");
+      var response = await http.put(url);
+      if (response.statusCode == 200) {
+        print("Acesso incrementado para o livro ID: $bookId");
+      } else {
+        print("Erro ao incrementar acessos: Código ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Erro ao incrementar acessos: $e");
+    }
+  }
+
+  Future<void> _saveSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('bookId', bookId.toString());
+
+    setState(() {
+      savedBookId = bookId.toString();
+    });
+  }
 
   Future<void> _loadSessionData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -39,19 +77,23 @@ class _AcervoState extends State<Acervo> {
     });
   }
 
-  Future<void> carregaLivros() async{
-    var url = Uri.parse("http://localhost:8080/Book/todos");
-    http.Response response = await http.get(url);
-    if(response.statusCode == 200){
-      
-    }
+  @override
+  void initState() {
+    super.initState();
+    livrosCarregados = carregaLivros();
+    _searchController.addListener(_filtrarLivros);
+  }
+
+  void _filtrarLivros() {
+    setState(() {
+      livrosExibidos = bookRepository.listaBook
+          .where((book) => book.title.toLowerCase().contains(_searchController.text.toLowerCase()))
+          .toList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = list.first;
-    _loadSessionData();
-    carregaLivros();
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset(
@@ -60,218 +102,99 @@ class _AcervoState extends State<Acervo> {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Perfil())));
-              },
-              icon: Icon(Icons.person))
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Perfil()),
+              );
+            },
+            icon: Icon(Icons.person),
+          ),
         ],
         backgroundColor: Color.fromARGB(255, 24, 24, 26),
       ),
-
-      body: 
-      SingleChildScrollView( child: 
-        Column(
+      body: Column(
         children: [
-          Container(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.purple,
-                    Colors.blue,
-                  ],
-                ),
-              ),
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.all(50),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset('assets/images/acervo.png' , width: 200,),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Acervo", style: TextStyle(color: Colors.white , fontSize: 40, fontWeight: FontWeight.bold),),
-                              Text("Veja nossos", style: TextStyle(color: Colors.white , fontSize: 24),),
-                              Text("livros!", style: TextStyle(color: Colors.white , fontSize: 24),),
-                              
-                            ],
-                          ),
-                        ],
-                      )
-
-
-                    ],
-                  ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Pesquisar livro',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
             ),
           ),
-
-          Container(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 24, 24, 26),
-              ),
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.all(30),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-
-SizedBox(height: 25,),
-            
-            SearchAnchor(
-              builder: (BuildContext context, SearchController controller) {
-            return SearchBar(
-              controller: controller,
-              padding: const WidgetStatePropertyAll<EdgeInsets>(
-                  EdgeInsets.symmetric(horizontal: 16.0)),
-              onTap: () {
-                controller.openView();
+          Expanded(
+            child: FutureBuilder<void>(
+              future: livrosCarregados,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return const Center(child: Text("Erro ao carregar livros"));
+                } else if (livrosExibidos.isEmpty) {
+                  return const Center(child: Text("Nenhum livro disponível."));
+                } else {
+                  return GridView.builder(
+                    padding: const EdgeInsets.all(16.0),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 0.7,
+                    ),
+                    itemCount: livrosExibidos.length,
+                    itemBuilder: (context, index) {
+                      final livro = livrosExibidos[index];
+                      return GestureDetector(
+                        onTap: () async {
+                          await incrementarAcessos(livro.id); // Incrementa acessos ao clicar
+                          bookId = livro.id;
+                          _saveSessionData();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BookDetailPage(book: livro),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              "assets/images/covers/${livro.cover}",
+                              width: 100,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              livro.title,
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              livro.author,
+                              style: const TextStyle(fontSize: 14),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }
               },
-              onChanged: (_) {
-                controller.openView();
-              },
-              leading: const Icon(Icons.search),
-            );
-          }, suggestionsBuilder:
-                  (BuildContext context, SearchController controller) {
-            return List<ListTile>.generate(5, (int index) {
-              final String item = 'Livro $index';
-              return ListTile(
-                title: Text(item),
-                onTap: () {
-                  setState(() {
-                    controller.closeView(item);
-                  });
-                },
-              );
-            });
-          }),
-
-          SizedBox(height: 60,),
-
-                      Row(
-                        
-                      mainAxisAlignment: MainAxisAlignment.center,  
-                      children: [
-                      
-                      Column(children: [
-
-                       Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
-                      ],),
-                      
-                      SizedBox(width: 50,),
-
-                      Column(children: [
-                        Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
-                      ],)],),
-                      SizedBox(height: 35,),
-
-                      Row(
-                        
-                      mainAxisAlignment: MainAxisAlignment.center,  
-                      children: [
-                      
-                      Column(children: [
-
-                       Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
-                      ],),
-                      
-                      SizedBox(width: 50,),
-
-                      Column(children: [
-                        Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
-                      ],)],),
-                      SizedBox(height: 35,),
-
-                      Row(
-                        
-                      mainAxisAlignment: MainAxisAlignment.center,  
-                      children: [
-                      
-                      Column(children: [
-
-                       Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
-                      ],),
-                      
-                      SizedBox(width: 50,),
-
-                      Column(children: [
-                        Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
-                      ],)],),
-                      SizedBox(height: 35,),
-
-                      Row(
-                        
-                      mainAxisAlignment: MainAxisAlignment.center,  
-                      children: [
-                      
-                      Column(children: [
-
-                       Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
-                      ],),
-                      
-                      SizedBox(width: 50,),
-
-                      Column(children: [
-                        Image.network('https://th.bing.com/th/id/OIP.x4TzFiPTeW69XbIn4Sex7wHaLu?rs=1&pid=ImgDetMain', width: 170,),
-                       Text("Lorem Ipsum?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
-                      ],)],),
-                      SizedBox(height: 35,),
-
-                   ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          Container(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.blue,
-                    Colors.purple,
-                  ],
-                ),
-              ),
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.all(30),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      
-                    ],
-                  ),
-                ),
-              ),
             ),
           ),
         ],
       ),
 
-      ),
+
 
 
 bottomNavigationBar: BottomAppBar(
@@ -279,27 +202,32 @@ bottomNavigationBar: BottomAppBar(
         color: Color.fromARGB(255, 24, 24, 26),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
-              Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Index())));
-          }, icon: Icon(Icons.info_outline, color: Colors.white, size: 40,)),
+            Navigator.push(context, MaterialPageRoute(builder: ((context) => Index())));
+          }, icon: Icon(Icons.info_outlined, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            
-          }, icon: Icon(Icons.menu_book_rounded,color: Colors.white, size: 40,)),
+            if(savedName == null || savedId == null){
+
+            }else{
+            }
+          }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Alocation())));
+            if(savedId == null || savedName == null){
+
+            }else{
+              
+            }
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
-          IconButton(onPressed: () {
-            Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Help())));
-          }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
-          IconButton(onPressed: () {
-            Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Perfil())));
-          }, icon: Icon(Icons.person_outlined,color: Colors.white, size: 40,)),
         ],),
       ),
+
+
+
     );
   }
-}
 
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+}
