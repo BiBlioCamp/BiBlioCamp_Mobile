@@ -64,11 +64,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   Future<void> _alocarLivro() async {
     final prefs = await SharedPreferences.getInstance();
-    final userId = 1109;
+    final userId = savedId;
 
     if (alocDate != null && userId != null) {
       bool success = await AlocRepository().alocarLivro(
-        userId: userId,
+        userId: int.parse(savedId.toString()),
         bookId: int.parse(savedBookId.toString()),
         alocDate: alocDate!,
         returnDate: returnDate!,
