@@ -45,4 +45,19 @@ class AlocRepository {
       return false;
     }
   }
+
+  Future<List<Map<String, dynamic>>> buscarAlocacoesPorUsuario(int userId) async {
+    final response = await http.get(Uri.parse("$_baseUrl/Aloc/select/$userId"));
+    if (response.statusCode == 200) {
+      List<Map<String, dynamic>> alocacoes = List<Map<String, dynamic>>.from(jsonDecode(response.body));
+      return alocacoes;
+    } else {
+      throw Exception("Erro ao buscar alocações");
+    }
+  }
+
+  Future<bool> cancelarAlocacao(int userId, int bookId) async {
+    final response = await http.delete(Uri.parse("$_baseUrl/delete/$userId/$bookId"));
+    return response.statusCode == 200;
+  }
 }

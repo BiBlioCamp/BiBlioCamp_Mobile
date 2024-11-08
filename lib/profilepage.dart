@@ -5,7 +5,7 @@ import 'package:bbc/cadaster.dart';
 import 'package:bbc/editprofilepage.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
-import 'package:bbc/user.dart';
+import 'package:bbc/class/user.dart';
 import 'package:bbc/class/account.dart';
 import 'package:bbc/repository/accountRepository.dart';
 import 'package:flutter/material.dart';
@@ -97,6 +97,8 @@ class _PerfilState extends State<Perfil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      backgroundColor: Color.fromRGBO(29, 27, 49, 1),
       appBar: AppBar(
         leading: Image.asset(
           'assets/images/logobbc.png',
@@ -105,7 +107,7 @@ class _PerfilState extends State<Perfil> {
         actions: [
           IconButton(
             onPressed: _confirmLogout,
-            icon: Icon(Icons.exit_to_app),
+            icon: Icon(Icons.exit_to_app, color: Colors.white,),
           ),
         ],
         backgroundColor: Color.fromARGB(255, 24, 24, 26),
@@ -148,7 +150,7 @@ class _PerfilState extends State<Perfil> {
                                         savedName ?? '',
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 25,
+                                          fontSize: 50,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -156,17 +158,26 @@ class _PerfilState extends State<Perfil> {
                                         savedId ?? '',
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 15,
+                                          fontSize: 25,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       SizedBox(height: 40),
+                                      
+                                  
                                       SizedBox(
-                                        width: 100,
-                                        height: 25,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.push(
+                                        height: 50,
+                                        width: 150,
+                                        child: ElevatedButton(style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.white,
+                                        backgroundColor: Color.fromRGBO(29, 27, 49, 1),
+                                        textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
+                                        ),
+                                        onPressed: () {
+                                        setState(() {
+                  
+                                        });
+                                        Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => EditProfilePage(
@@ -178,9 +189,9 @@ class _PerfilState extends State<Perfil> {
                                                 _loadAccountData();
                                               }
                                             });
-                                          },
-                                          child: Text("Editar"),
-                                        ),
+                                            },
+                                            child: Text("Editar Perfil")),
+                                       
                                       ),
                                     ],
                                   ),
@@ -194,7 +205,7 @@ class _PerfilState extends State<Perfil> {
                   ),
                   Container(
                     child: DecoratedBox(
-                      decoration: BoxDecoration(color: Colors.white),
+                      decoration: BoxDecoration(color: Color.fromRGBO(29, 27, 49, 1),),
                       child: Center(
                         child: Padding(
                           padding: EdgeInsets.all(30),
@@ -208,7 +219,7 @@ class _PerfilState extends State<Perfil> {
                                   Text(
                                     "Atualmente lendo:",
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
                                     ),

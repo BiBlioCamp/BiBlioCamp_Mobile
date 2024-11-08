@@ -1,7 +1,8 @@
+import 'package:bbc/alocacoes.dart';
 import 'package:bbc/class/book.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
-import 'package:bbc/perfil.dart';
+import 'package:bbc/profilepage.dart';
 import 'package:bbc/repository/bookRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -108,7 +109,7 @@ class _AcervoState extends State<Acervo> {
                 MaterialPageRoute(builder: (context) => Perfil()),
               );
             },
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person, color: Colors.white,),
           ),
         ],
         backgroundColor: Color.fromARGB(255, 24, 24, 26),
@@ -211,11 +212,8 @@ bottomNavigationBar: BottomAppBar(
             }
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            if(savedId == null || savedName == null){
-
-            }else{
-              
-            }
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => AlocacoesPage())));
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
         ],),
       ),

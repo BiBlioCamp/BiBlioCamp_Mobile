@@ -2,9 +2,9 @@
 
 import 'package:bbc/acervo.dart';
 import 'package:bbc/cadaster.dart';
-import 'package:bbc/contact.dart';
+import 'package:bbc/contactform.dart';
 import 'package:bbc/index.dart';
-import 'package:bbc/perfil.dart';
+import 'package:bbc/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,6 +32,9 @@ class _HelpState extends State<Help> {
   Widget build(BuildContext context) {
     _loadSessionData();
     return Scaffold(
+
+      backgroundColor: Colors.black,
+
       appBar: AppBar(
         leading: Image.asset(
           'assets/images/logobbc.png',
@@ -48,7 +51,7 @@ class _HelpState extends State<Help> {
                     MaterialPageRoute(builder: ((context) => Perfil())));
                 }
               },
-              icon: Icon(Icons.person))
+              icon: Icon(Icons.person, color: Colors.white,))
         ],
         backgroundColor: Color.fromARGB(255, 24, 24, 26),
       ),
@@ -103,8 +106,9 @@ class _HelpState extends State<Help> {
 
           Container(
             child: DecoratedBox(
+              
               decoration: BoxDecoration(
-                color: Colors.white
+                color: Color.fromRGBO(29, 27, 49, 1),
               ),
               child: Center(
                 child: Padding(
@@ -116,37 +120,65 @@ class _HelpState extends State<Help> {
 
           SizedBox(height: 59.4,),  
           const ExpansionTile(
-          title: Text('Problemas com alocação de livros', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+          title: Text('Problemas com login?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
           controlAffinity: ListTileControlAffinity.leading,
+          collapsedIconColor: Colors.white,
           children: <Widget>[
-            ListTile(title: Text('Lorem ipsum?')),
+            ListTile(title: Text('1: Verifique se os dados digitados estão realmente corretos.', style: TextStyle(color: Colors.white),)),
+            ListTile(title: Text('2: Tente alterar sua senha.', style: TextStyle(color: Colors.white),),),
+            ListTile(title: Text('3: Se não funcionar use o formulário de contato!', style: TextStyle(color: Colors.white),),),
           ],
         ),
         SizedBox(height: 30,),
 
         const ExpansionTile(
-          title: Text('Problemas com Login', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+          title: Text('Problemas com cadastro?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
           controlAffinity: ListTileControlAffinity.leading,
+          collapsedIconColor: Colors.white,
           children: <Widget>[
-            ListTile(title: Text('Lorem ipsum?')),
+            ListTile(title: Text('1: Verifique se os dados digitados estão realmente corretos.', style: TextStyle(color: Colors.white),),),
+            ListTile(title: Text('2: Se seus dados não forem veridicos o cadastro pode não funcionar.', style: TextStyle(color: Colors.white),),),
+            ListTile(title: Text('3: Se não funcionar use o formulário de contato!', style: TextStyle(color: Colors.white),),),
           ],
         ),
         SizedBox(height: 30,),
 
         const ExpansionTile(
-          title: Text('Problemas com Cadastro', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+          title: Text('Problemas buscando por livros?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
           controlAffinity: ListTileControlAffinity.leading,
+          collapsedIconColor: Colors.white,
           children: <Widget>[
-            ListTile(title: Text('Lorem ipsum?')),
+            ListTile(title: Text('1: Talvez a biblioteca não possua este livro, tente conversar com o funcionario da biblioteca.', style: TextStyle(color: Colors.white),)),
+            ListTile(title: Text('2: Não use caracteres especiais.', style: TextStyle(color: Colors.white),),),
+            ListTile(title: Text('3: Tente pesquisar com apenas algumas letras do nome do livro.', style: TextStyle(color: Colors.white),),),
+            ListTile(title: Text('4: Tente pesquisar por variações do nome do livro.', style: TextStyle(color: Colors.white),),),
+            ListTile(title: Text('5: Se não funcionar use o formulário de contato!', style: TextStyle(color: Colors.white),),),
           ],
         ),
         SizedBox(height: 30,),
 
         const ExpansionTile(
-          title: Text('Problemas ao procurar um livro', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+          title: Text('Problemas usando o formulario de contato?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
           controlAffinity: ListTileControlAffinity.leading,
+          collapsedIconColor: Colors.white,
           children: <Widget>[
-            ListTile(title: Text('Lorem ipsum?')),
+            ListTile(title: Text('1: Verifique se o email não foi digitado incorretamente.', style: TextStyle(color: Colors.white),)),
+            ListTile(title: Text('2: O uso de palavras de baixo calão em sua mensagem podem barrar o envio do formulario.', style: TextStyle(color: Colors.white),),),
+            ListTile(title: Text('3: O site pode estar com problemas de conexão, tente novamente mais tarde.', style: TextStyle(color: Colors.white),),),
+          ],
+        ),
+        SizedBox(height: 30),
+
+
+        const ExpansionTile(
+          title: Text('Problemas com reservas?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
+          controlAffinity: ListTileControlAffinity.leading,
+          collapsedIconColor: Colors.white,
+          children: <Widget>[
+            ListTile(title: Text('1: Verifique se não há um erro na hora de escolher a data.', style: TextStyle(color: Colors.white),)),
+            ListTile(title: Text('2: Verifique se o estoque do livro não acabou.', style: TextStyle(color: Colors.white),),),
+            ListTile(title: Text('3: O site pode estar com problemas de conexão, tente novamente mais tarde.', style: TextStyle(color: Colors.white),),),
+            ListTile(title: Text('4: Se não funcionar use o formulário de contato!', style: TextStyle(color: Colors.white),),),
           ],
         ),
         SizedBox(height: 60),

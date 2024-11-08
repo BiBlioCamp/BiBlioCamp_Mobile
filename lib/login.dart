@@ -1,11 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, must_be_immutable, unused_element, unused_import
-
 import 'package:bbc/acervo.dart';
 import 'package:bbc/class/account.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
-import 'package:bbc/perfil.dart';
-import 'package:bbc/user.dart';
+import 'package:bbc/profilepage.dart';
+import 'package:bbc/class/user.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -19,7 +17,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   GlobalKey<FormState> validatorKey = GlobalKey();
 
   TextEditingController emailController = TextEditingController(),
@@ -37,34 +34,27 @@ class _LoginState extends State<Login> {
   String? savedId;
 
   Account acc = Account();
-
-  List<User> userList = [
-    User("joao@g.unicamp.br", "Joao", "Joao", 202235),
-    User("enrique@g.unicamp.br", "Enrique", "Enrique", 202207),
-    User("jedson@g.unicamp.br", "Jedson", "Jedson", 202158),
-    User("julya@g.unicamp.br", "Julya", "Julya", 202206),
-    User("gabriel@g.unicamp.br", "Gabriel", "Gabriel", 202238),
-  ];
-
-  Future<void> requisicao() async{
-   var url = Uri.parse('http://localhost:8080/Account/select/' + emailController.text + '/' + passwordController.text);
+  
+  Future<void> requisicao() async {
+    var url = Uri.parse('http://localhost:8080/Account/select/' + emailController.text + '/' + passwordController.text);
     http.Response response = await http.get(url);
-    dados = response.body;
-    Map<String, dynamic> formatedData = jsonDecode(dados);
-    acc = Account.fromJson(formatedData);
-    if(response.statusCode==200){
-        setState(() {
-          _saveSessionData();
-          Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Perfil())));
-        });
-    }else{
-      mensagemLog = "Conta não encontrada!";
+    
+    if (response.statusCode == 200) {
+      dados = response.body;
+      Map<String, dynamic> formatedData = jsonDecode(dados);
+      acc = Account.fromJson(formatedData);
+      setState(() {
+        _saveSessionData();
+        Navigator.push(context, MaterialPageRoute(builder: ((context) => Perfil())));
+      });
+    } else if (response.statusCode == 404) {
+      setState(() {
+        mensagemLog = "Conta não encontrada!";
+      });
     }
   }
-  
 
-   Future<void> _saveSessionData() async {
+  Future<void> _saveSessionData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('name', acc.name);
     await prefs.setString('id', acc.id.toString());
@@ -94,7 +84,6 @@ class _LoginState extends State<Login> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +98,7 @@ class _LoginState extends State<Login> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Index())));
               },
-              icon: Icon(Icons.home))
+              icon: Icon(Icons.home, color: Colors.white,))
         ],
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 24, 24, 26),

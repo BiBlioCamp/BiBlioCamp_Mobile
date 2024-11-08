@@ -4,7 +4,7 @@ import 'package:bbc/acervo.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
-import 'package:bbc/perfil.dart';
+import 'package:bbc/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -52,7 +52,7 @@ class _ContactState extends State<Contact> {
                     MaterialPageRoute(builder: ((context) => Perfil())));
                 }
               },
-              icon: Icon(Icons.person))
+              icon: Icon(Icons.person, color: Colors.white,))
         ],
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 24, 24, 26),

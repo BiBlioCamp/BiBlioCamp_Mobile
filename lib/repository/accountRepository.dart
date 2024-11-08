@@ -14,12 +14,18 @@ class AccountRepository {
   }
 
   Future<bool> alterarNome(String name, String username, int id) async {
-    final response = await http.put(Uri.parse("$baseUrl/update/name/$name/$username/$id"));
+    final response = await http.put(
+      Uri.parse("$baseUrl/update/name/$name/$username/$id"),
+      headers: {"Content-Type": "application/json"},
+    );
     return response.statusCode == 200;
   }
 
   Future<bool> alterarEmail(String email, int id) async {
-    final response = await http.put(Uri.parse("$baseUrl/update/email/$email/$id"));
+    final response = await http.put(
+      Uri.parse("$baseUrl/update/email/$email/$id"),
+      headers: {"Content-Type": "application/json"},
+    );
     return response.statusCode == 200;
   }
 
@@ -32,7 +38,10 @@ class AccountRepository {
   }
 
   Future<bool> alterarSenha(String password, int id) async {
-    final response = await http.put(Uri.parse("$baseUrl/update/password/$password/$id"));
+    final response = await http.put(
+      Uri.parse("$baseUrl/update/password/$password/$id"),
+      headers: {"Content-Type": "application/json"},
+    );
     return response.statusCode == 200;
   }
 
@@ -65,6 +74,11 @@ class AccountRepository {
         "type": account.type,
       }),
     );
+    return response.statusCode == 200;
+  }
+
+  Future<bool> deletarConta(int id) async {
+    final response = await http.delete(Uri.parse("$baseUrl/delete/$id"));
     return response.statusCode == 200;
   }
 }

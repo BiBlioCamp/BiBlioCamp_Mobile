@@ -2,7 +2,8 @@ import 'package:bbc/changepassword.dart';
 import 'package:bbc/class/account.dart';
 import 'package:bbc/repository/accountRepository.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'index.dart'; // Importa a página Index para redirecionamento
 
 class EditProfilePage extends StatefulWidget {
   final Account account;
@@ -23,6 +24,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _nameController.text = widget.account.name; // Preenche o campo com o nome atual
   }
 
+  String? savedName;
+  String? savedId;
+
+  
+
   Future<void> _showErrorDialog(String message) async {
     return showDialog<void>(
       context: context,
@@ -41,6 +47,87 @@ class _EditProfilePageState extends State<EditProfilePage> {
         );
       },
     );
+  }
+
+  Future<void> _showConfirmDialog() async {
+    final TextEditingController _passwordController = TextEditingController();
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Excluir Conta'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita."),
+              TextField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: InputDecoration(labelText: "Senha Atual"),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Excluir'),
+              onPressed: () {
+                _deleteAccount(_passwordController.text);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _loadSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedName = prefs.getString('name');
+      savedId = prefs.getString('id');
+    });
+  }
+
+  Future<void> _clearSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('name');
+    await prefs.remove('id');
+
+    setState(() {
+      savedName = null;
+      savedId = null;
+    });
+  }
+
+  Future<void> _deleteAccount(String currentPassword) async {
+    String? storedPassword = await _accountRepository.buscarSenha(widget.account.id);
+    if (storedPassword != currentPassword) {
+      Navigator.of(context).pop();
+      _showErrorDialog("Senha atual incorreta.");
+      return;
+    }
+
+    bool accountDeleted = await _accountRepository.deletarConta(widget.account.id);
+
+    if (accountDeleted) {
+      Navigator.of(context).pop(); // Fechar o diálogo de confirmação
+      _clearSessionData();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Index()), // Redireciona para a página Index
+        (Route<dynamic> route) => false,
+      );
+    } else {
+      Navigator.of(context).pop();
+      _showErrorDialog("Falha ao excluir conta.");
+    }
   }
 
   Future<void> _saveProfileChanges() async {
@@ -66,13 +153,35 @@ class _EditProfilePageState extends State<EditProfilePage> {
               decoration: InputDecoration(labelText: "Nome"),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _saveProfileChanges,
-              child: Text("Salvar Alterações"),
+            SizedBox(
+            height: 50,
+            width: 200,
+            child: ElevatedButton(style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.green,
+              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
               onPressed: () {
+                setState(() {
+                  
+                });
+                _saveProfileChanges();
+              },
+              child: Text("Salvar Alterações")),
+          ),
+            SizedBox(height: 20),
+            SizedBox(
+            height: 50,
+            width: 200,
+            child: ElevatedButton(style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.red,
+              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
+            ),
+              onPressed: () {
+                setState(() {
+                  
+                });
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -80,8 +189,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 );
               },
-              child: Text("Mudar Senha"),
+              child: Text("Alterar Senha")),
+          ),
+            SizedBox(height: 20),
+            SizedBox(
+            height: 50,
+            width: 200,
+            child: ElevatedButton(style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.red,
+              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
             ),
+              onPressed: () {
+                setState(() {
+                  
+                });
+               _showConfirmDialog();
+              },
+              child: Text("Excluir Conta")),
+          ),
           ],
         ),
       ),

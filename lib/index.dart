@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:bbc/acervo.dart';
+import 'package:bbc/alocacoes.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
-import 'package:bbc/perfil.dart';
+import 'package:bbc/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,6 +32,8 @@ class IndexState extends State<Index> {
   Widget build(BuildContext context) {
     _loadSessionData();
     return Scaffold(
+
+      backgroundColor: Colors.purple,
       appBar: AppBar(
         leading: Image.asset(
           'assets/images/logobbc.png',
@@ -47,7 +50,7 @@ class IndexState extends State<Index> {
                     MaterialPageRoute(builder: ((context) => Perfil())));
                 }
               },
-              icon: Icon(Icons.person))
+              icon: Icon(Icons.person, color: Colors.white,))
         ],
         backgroundColor: Color.fromARGB(255, 24, 24, 26),
       ),
@@ -74,25 +77,10 @@ class IndexState extends State<Index> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset('assets/images/celular.png.png' , width: 200,),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Bibliocamp", style: TextStyle(color: Colors.white , fontSize: 30, fontWeight: FontWeight.bold),),
-                              Text("A melhor maneira", style: TextStyle(color: Colors.white , fontSize: 18),),
-                              Text("de gerenciar seus", style: TextStyle(color: Colors.white , fontSize: 18),),
-                              Text("livros emprestados", style: TextStyle(color: Colors.white , fontSize: 18),),
-                              Text("da escola!", style: TextStyle(color: Colors.white , fontSize: 18),),
-                              
-                            ],
-                          ),
-                        ],
-                      )
-
-
+                              Text("Bibliocamp", style: TextStyle(color: Colors.white , fontSize: 60, fontWeight: FontWeight.bold),),
+                              Text("A melhor maneira de gerenciar suas", style: TextStyle(color: Colors.white , fontSize: 20),),
+                              Text("alocações da biblioteca do Campus da", style: TextStyle(color: Colors.white , fontSize: 20),),
+                              Text("Unicamp de Limeira!", style: TextStyle(color: Colors.white , fontSize: 20),),
                     ],
                   ),
                 ),
@@ -103,36 +91,43 @@ class IndexState extends State<Index> {
           Container(
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 24, 24, 26),
+                color: const Color.fromRGBO(29, 27, 49, 1)
               ),
               child: Center(
-                child: Padding(
+                child: 
+                Padding(
                   padding: EdgeInsets.all(30),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                  child: 
+                  
+                  Row(children: [
+                  Column(
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset('assets/images/Pessoasx.png', width: 200,)
-                         ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Image.asset('assets/images/Alunosx.png', width: 200,)
-                         ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset('assets/images/LivrosX.png', width: 200,)
-                        ],
-                      ),
+                    
 
+                      children: [SizedBox(height: 50,),
+                        
+                        Text("Objetivo", style: TextStyle(color: Colors.white, fontSize: 30),),
+                        Text("Ajudar todos os alunos a terem", style: TextStyle(color: Colors.white),),
+                        Text("um acesso mais facil a todas as", style: TextStyle(color: Colors.white),),
+                        Text("funcionalidades da biblioteca", style: TextStyle(color: Colors.white),),
+                        Text("do Campus!", style: TextStyle(color: Colors.white),),
+                        SizedBox(height: 70,),
                       ],
                   ),
+                  SizedBox(width: 30,),
+                  
+                  
+                  
+                  Column(children: [SizedBox(height: 50,),
+                    Text("Oque temos", style: TextStyle(color: Colors.white, fontSize: 30),),
+                    Text("Um aplicativo simples bonito e", style: TextStyle(color: Colors.white),),
+                    Text("pratico que entrega", style: TextStyle(color: Colors.white),),
+                    Text("exatamente oque quem entrou", style: TextStyle(color: Colors.white),),
+                    Text("nele procurava!", style: TextStyle(color: Colors.white),),
+SizedBox(height: 70,),
+
+                  ]
+                  )],)
                 ),
               ),
             ),
@@ -156,18 +151,11 @@ class IndexState extends State<Index> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                              Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Image.asset('assets/images/diversidadedelivros.png', width: 200,)
-                         ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset('assets/images/maisacesso.png', width: 200,)
-                        ],
-                      ),
+                      SizedBox(height: 50,),
+                          Text("O site somente funciona para alunos da escola!", style: TextStyle(color: Colors.white, fontSize: 15),),
+                          Text("Para se registrar use seu email Unicamp", style: TextStyle(color: Colors.white), ),
+                          Text("(cl......@g.unicamp.br)", style: TextStyle(color: Colors.white),)
+                      
                     ],
                   ),
                 ),
@@ -196,6 +184,8 @@ class IndexState extends State<Index> {
             if(savedId == null || savedName == null){
 
             }else{
+              Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => AlocacoesPage())));
             }
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {

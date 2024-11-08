@@ -107,7 +107,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => Acervo()));
-          }, icon: Icon(Icons.arrow_back_ios)),
+          }, icon: Icon(Icons.arrow_back_ios, color: Colors.white,)),
         ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -128,7 +128,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 IconButton(
                   icon: Icon(Icons.calendar_today),
                   onPressed: () => _selectAlocDate(context),
-                ),
+                ),  
               ],
             ),
             SizedBox(height: 10),

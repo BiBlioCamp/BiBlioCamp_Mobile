@@ -1,11 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unrelated_type_equality_checks, use_build_context_synchronously
-
-import 'package:bbc/acervo.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/login.dart';
-import 'package:bbc/perfil.dart';
-import 'package:bbc/user.dart';
+import 'package:bbc/class/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -149,7 +146,7 @@ class _CadasterState extends State<Cadaster> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Index())));
               },
-              icon: Icon(Icons.home))
+              icon: Icon(Icons.home, color: Colors.white,))
         ],
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 24, 24, 26),

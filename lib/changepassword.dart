@@ -124,10 +124,19 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               decoration: InputDecoration(labelText: "Repita Nova Senha"),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _savePasswordChanges,
-              child: Text("Salvar Alterações"),
+            SizedBox(
+            height: 50,
+            width: 200,
+            child: ElevatedButton(style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.red,
+              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
             ),
+              onPressed: () {
+                _savePasswordChanges;
+              },
+              child: Text("Alterar Senha")),
+          ),
           ],
         ),
       ),
