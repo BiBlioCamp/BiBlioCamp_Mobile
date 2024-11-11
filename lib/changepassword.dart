@@ -107,28 +107,48 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Mudar Senha")),
-      body: Padding(
+      backgroundColor: Color.fromRGBO(29, 27, 49, 1),
+      appBar: AppBar(title: Text("Alterar Senha", style: TextStyle(color: Colors.white),),
+      backgroundColor: const Color.fromARGB(255, 40, 38, 70),
+      leading: IconButton(onPressed: () {
+          Navigator.pop(context);
+        }, icon: Icon(Icons.arrow_back, color: Colors.white,)),),
+      body: SingleChildScrollView(child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              controller: _newPasswordController,
-              obscureText: true,
-              decoration: InputDecoration(labelText: "Nova Senha"),
+            TextFormField(
+            controller: _newPasswordController,
+            style: TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(50),borderSide: BorderSide(color: Colors.redAccent)),
+              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(50),borderSide: BorderSide(color: Colors.redAccent)),
+              filled: true,
+              fillColor: const Color.fromARGB(255, 40, 38, 70),
+              labelText: "Nova senha",
+              labelStyle: TextStyle(color: Colors.redAccent, ),
             ),
+          ),
             SizedBox(height: 20),
-            TextField(
-              controller: _confirmPasswordController,
-              obscureText: true,
-              decoration: InputDecoration(labelText: "Repita Nova Senha"),
+            TextFormField(
+            controller: _confirmPasswordController,
+            style: TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(50),borderSide: BorderSide(color: Colors.redAccent)),
+              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(50),borderSide: BorderSide(color: Colors.redAccent)),
+              filled: true,
+              fillColor: const Color.fromARGB(255, 40, 38, 70),
+              labelText: "Confirme a senha",
+              labelStyle: TextStyle(color: Colors.redAccent, ),
             ),
+          ),
+            
             SizedBox(height: 20),
             SizedBox(
             height: 50,
             width: 200,
             child: ElevatedButton(style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
+              foregroundColor: const Color.fromARGB(255, 40, 38, 70),
               backgroundColor: Colors.red,
               textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
             ),
@@ -139,7 +159,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           ),
           ],
         ),
-      ),
+      ),)
     );
   }
 }

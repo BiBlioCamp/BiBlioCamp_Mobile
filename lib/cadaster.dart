@@ -149,7 +149,7 @@ class _CadasterState extends State<Cadaster> {
               icon: Icon(Icons.home, color: Colors.white,))
         ],
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 24, 24, 26),
+        backgroundColor: const Color.fromARGB(255, 40, 38, 70),
       ),
       bottomNavigationBar: BottomAppBar(
         height: 70,

@@ -1,9 +1,20 @@
 import 'dart:convert';
+import 'package:bbc/class/aloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class AlocRepository {
   final String _baseUrl = 'http://localhost:8080'; // Substitua pelo endereço correto do servidor
+
+  Future<List<String>> buscarLivrosEmPosse(int userId) async {
+    final response = await http.get(Uri.parse("$_baseUrl/Aloc/livrosEmPosse/$userId"));
+    if (response.statusCode == 200) {
+      List<String> livrosEmPosse = List<String>.from(jsonDecode(response.body));
+      return livrosEmPosse;
+    } else {
+      throw Exception("Erro ao buscar livros em posse");
+    }
+  }
 
   Future<bool> alocarLivro({
     required int userId,
@@ -57,7 +68,13 @@ class AlocRepository {
   }
 
   Future<bool> cancelarAlocacao(int userId, int bookId) async {
-    final response = await http.delete(Uri.parse("$_baseUrl/delete/$userId/$bookId"));
+    final response = await http.delete(Uri.parse("$_baseUrl/Aloc/delete/$userId/$bookId"));
     return response.statusCode == 200;
   }
+
+  List<Aloc> _listaAloc = [];
+
+  List<Aloc> get listaAloc => this.listaAloc;
+
+  set listaAloc(List<Aloc> value) => this._listaAloc = value;
 }

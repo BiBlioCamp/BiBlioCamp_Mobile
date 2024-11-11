@@ -87,6 +87,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue,
       appBar: AppBar(
         leading: Image.asset(
           'assets/images/logobbc.png',
@@ -101,7 +102,7 @@ class _LoginState extends State<Login> {
               icon: Icon(Icons.home, color: Colors.white,))
         ],
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 24, 24, 26),
+        backgroundColor: const Color.fromARGB(255, 40, 38, 70),
       ),
       bottomNavigationBar: BottomAppBar(
         height: 70,
@@ -126,7 +127,7 @@ class _LoginState extends State<Login> {
           }, icon: Icon(Icons.person_outlined,color: Colors.white, size: 40,)),
         ],),
       ),
-      body: Container(
+      body: SingleChildScrollView(child: Container(
         child: Form(
           key: validatorKey,
         child: DecoratedBox(
@@ -264,7 +265,7 @@ class _LoginState extends State<Login> {
           ),
         ),
       ),
-    ),
+    ),)
   );
 }
 }

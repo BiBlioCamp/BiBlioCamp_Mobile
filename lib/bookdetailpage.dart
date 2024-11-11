@@ -16,7 +16,6 @@ class BookDetailPage extends StatefulWidget {
 }
 
 class _BookDetailPageState extends State<BookDetailPage> {
-  
   DateTime? alocDate;
   DateTime? returnDate;
 
@@ -30,6 +29,12 @@ class _BookDetailPageState extends State<BookDetailPage> {
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 30)),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark(), // Tema escuro para o seletor de datas
+          child: child!,
+        );
+      },
     );
     if (pickedDate != null && pickedDate != alocDate) {
       setState(() {
@@ -48,7 +53,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     });
   }
 
-  Future<void> reducStock () async {
+  Future<void> reducStock() async {
     try {
       var url = Uri.parse("http://localhost:8080/Book/ActualStock/less/$savedBookId");
       var response = await http.put(url);
@@ -66,7 +71,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     final prefs = await SharedPreferences.getInstance();
     final userId = savedId;
 
-    if (alocDate != null && userId != null) {
+    if (alocDate != null && userId != null && widget.book.actualStock > 0) {
       bool success = await AlocRepository().alocarLivro(
         userId: int.parse(savedId.toString()),
         bookId: int.parse(savedBookId.toString()),
@@ -76,11 +81,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
       );
 
       if (success) {
-        
-        reducStock();
-        setState(() {
-          
-        });
+        await reducStock();
+        setState(() {});
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Livro alocado com sucesso!')),
         );
@@ -91,7 +93,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Por favor, selecione uma data de retirada.')),
+        SnackBar(content: Text('Falha ao alocar o livro, verifique as informações.')),
       );
     }
   }
@@ -100,48 +102,69 @@ class _BookDetailPageState extends State<BookDetailPage> {
   Widget build(BuildContext context) {
     _loadSessionData();
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 17, 16, 29),
       appBar: AppBar(
-          title: Text("Alocação de ${widget.book.title}"),
-          leading: IconButton(onPressed: () {
+        title: Text("Alocação de ${widget.book.title}", style: TextStyle(color: Colors.white),),
+        leading: IconButton(
+          onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => Acervo()));
-          }, icon: Icon(Icons.arrow_back_ios, color: Colors.white,)),
+              MaterialPageRoute(builder: (context) => Acervo()),
+            );
+          },
+          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
-      body: Padding(
+        backgroundColor: const Color.fromARGB(255, 40, 38, 70),
+      ),
+      body: SingleChildScrollView(child: 
+      Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Título: ${widget.book.title}", style: TextStyle(fontSize: 20)),
-            Text("Autor: ${widget.book.author}", style: TextStyle(fontSize: 18)),
-            Text("Estoque disponível: ${widget.book.actualStock}", style: TextStyle(fontSize: 18, color: Colors.green)),
-
+            Center(
+              child: Image.asset(
+                "assets/images/covers/${widget.book.cover}",
+                width: 200,
+                height: 300,
+                fit: BoxFit.cover,
+              ),
+            ),
             SizedBox(height: 20),
-            Text("Data de Retirada:"),
+            Text("Título: ${widget.book.title}", style: TextStyle(fontSize: 20, color: Colors.white)),
+            Text("Autor: ${widget.book.author}", style: TextStyle(fontSize: 18, color: Colors.white)),
+            Text("Estoque disponível: ${widget.book.actualStock}", style: TextStyle(fontSize: 18, color: Colors.green)),
+            SizedBox(height: 20),
+            Text("Data de Retirada:", style: TextStyle(color: Colors.white)),
             Row(
               children: [
-                Text(alocDate == null
-                    ? "Selecione uma data"
-                    : DateFormat('dd/MM/yyyy').format(alocDate!)),
+                Text(
+                  alocDate == null ? "Selecione uma data" : DateFormat('dd/MM/yyyy').format(alocDate!),
+                  style: TextStyle(color: Colors.white),
+                ),
                 IconButton(
-                  icon: Icon(Icons.calendar_today),
+                  icon: Icon(Icons.calendar_today, color: Colors.white),
                   onPressed: () => _selectAlocDate(context),
-                ),  
+                ),
               ],
             ),
             SizedBox(height: 10),
-            Text("Data de Devolução: ${returnDate != null ? DateFormat('dd/MM/yyyy').format(returnDate!) : ''}"),
-            
+            Text(
+              "Data de Devolução: ${returnDate != null ? DateFormat('dd/MM/yyyy').format(returnDate!) : ''}",
+              style: TextStyle(color: Colors.white),
+            ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _alocarLivro,
-              child: Text("Alocar"),
+                            style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 40, 37, 71),
+              ),
+              child: Text("Alocar", style: TextStyle(color: Colors.white),),
             ),
           ],
         ),
       ),
+      )
     );
   }
 }

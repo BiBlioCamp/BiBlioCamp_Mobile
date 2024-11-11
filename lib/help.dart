@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:bbc/acervo.dart';
+import 'package:bbc/alocacoes.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/contactform.dart';
 import 'package:bbc/index.dart';
@@ -53,7 +54,7 @@ class _HelpState extends State<Help> {
               },
               icon: Icon(Icons.person, color: Colors.white,))
         ],
-        backgroundColor: Color.fromARGB(255, 24, 24, 26),
+        backgroundColor: const Color.fromARGB(255, 40, 38, 70),
       ),
 
       body: 
@@ -251,10 +252,11 @@ class _HelpState extends State<Help> {
         color: Color.fromARGB(255, 24, 24, 26),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: ((context) => Index())));
-          }, icon: Icon(Icons.info_outlined, color: Colors.white, size: 40,)),
+              Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Index())));
+          }, icon: Icon(Icons.house_outlined, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            if(savedId == null || savedName == null){
+            if(savedName == null || savedId == null){
 
             }else{
               Navigator.push(context,
@@ -265,7 +267,8 @@ class _HelpState extends State<Help> {
             if(savedId == null || savedName == null){
 
             }else{
-
+              Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => AlocacoesPage())));
             }
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
@@ -275,7 +278,7 @@ class _HelpState extends State<Help> {
             if(savedId == null || savedName == null){
 
             }else{
-              Navigator.push(context,
+            Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Perfil())));
             }
           }, icon: Icon(Icons.person_outlined,color: Colors.white, size: 40,)),

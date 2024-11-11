@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_import
 
 import 'package:bbc/acervo.dart';
+import 'package:bbc/alocacoes.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/editprofilepage.dart';
 import 'package:bbc/help.dart';
@@ -10,6 +11,7 @@ import 'package:bbc/class/account.dart';
 import 'package:bbc/repository/accountRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Perfil extends StatefulWidget {
   Perfil({super.key});
@@ -110,7 +112,7 @@ class _PerfilState extends State<Perfil> {
             icon: Icon(Icons.exit_to_app, color: Colors.white,),
           ),
         ],
-        backgroundColor: Color.fromARGB(255, 24, 24, 26),
+        backgroundColor: const Color.fromARGB(255, 40, 38, 70),
       ),
       body: _account == null
           ? Center(child: CircularProgressIndicator())
@@ -212,21 +214,21 @@ class _PerfilState extends State<Perfil> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(height: 25),
+                              SizedBox(height: 50),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Atualmente lendo:",
-                                    style: TextStyle(
+                                    "Ler é um ato de abrir portais \ninfinitos: \nCada livro é uma chave para\n novas perspectivas, um convite \nà introspecção e uma viagem\n pelas vastas paisagens do\n conhecimento e da\n imaginação.",
+                                    style: GoogleFonts.satisfy(
                                       color: Colors.white,
-                                      fontSize: 25,
+                                      fontSize: 35,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 30),
+                              SizedBox(height: 20),
                             ],
                           ),
                         ),
@@ -239,20 +241,39 @@ class _PerfilState extends State<Perfil> {
       bottomNavigationBar: BottomAppBar(
         height: 70,
         color: Color.fromARGB(255, 24, 24, 26),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Index()),
-                );
-              },
-              icon: Icon(Icons.info_outlined, color: Colors.white, size: 40),
-            ),
-          ],
-        ),
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          IconButton(onPressed: () {
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Index())));
+          }, icon: Icon(Icons.house_outlined, color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            if(savedName == null || savedId == null){
+
+            }else{
+              Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Acervo())));
+            }
+          }, icon: Icon(Icons.book_outlined,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            if(savedId == null || savedName == null){
+
+            }else{
+              Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => AlocacoesPage())));
+            }
+          }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Help())));
+          }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            if(savedId == null || savedName == null){
+
+            }else{
+      
+            }
+          }, icon: Icon(Icons.person,color: Colors.white, size: 40,)),
+        ],),
       ),
     );
   }

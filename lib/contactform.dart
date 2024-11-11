@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, dead_code
 
 import 'package:bbc/acervo.dart';
+import 'package:bbc/alocacoes.dart';
 import 'package:bbc/cadaster.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
@@ -36,6 +37,7 @@ class _ContactState extends State<Contact> {
   Widget build(BuildContext context) {
     _loadSessionData();
     return Scaffold(
+      backgroundColor: Colors.blue,
       appBar: AppBar(
         leading: Image.asset(
           'assets/images/logobbc.png',
@@ -55,17 +57,18 @@ class _ContactState extends State<Contact> {
               icon: Icon(Icons.person, color: Colors.white,))
         ],
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 24, 24, 26),
+        backgroundColor: const Color.fromARGB(255, 40, 38, 70),
       ),
       bottomNavigationBar: BottomAppBar(
         height: 70,
         color: Color.fromARGB(255, 24, 24, 26),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: ((context) => Index())));
-          }, icon: Icon(Icons.home_outlined, color: Colors.white, size: 40,)),
+              Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Index())));
+          }, icon: Icon(Icons.house, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            if(savedId == null || savedName == null){
+            if(savedName == null || savedId == null){
 
             }else{
               Navigator.push(context,
@@ -76,6 +79,8 @@ class _ContactState extends State<Contact> {
             if(savedId == null || savedName == null){
 
             }else{
+              Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => AlocacoesPage())));
             }
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
@@ -86,13 +91,14 @@ class _ContactState extends State<Contact> {
             if(savedId == null || savedName == null){
 
             }else{
-              Navigator.push(context,
+            Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Perfil())));
             }
           }, icon: Icon(Icons.person_outlined,color: Colors.white, size: 40,)),
         ],),
       ),
-      body: Container(
+      body: SingleChildScrollView(child: 
+      Container(
         child: DecoratedBox(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -188,6 +194,7 @@ class _ContactState extends State<Contact> {
           ),
         ),
       ),
+      )
     );
   }
 }

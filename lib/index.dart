@@ -52,7 +52,7 @@ class IndexState extends State<Index> {
               },
               icon: Icon(Icons.person, color: Colors.white,))
         ],
-        backgroundColor: Color.fromARGB(255, 24, 24, 26),
+        backgroundColor: const Color.fromARGB(255, 40, 38, 70),
       ),
 
       body: 
@@ -171,7 +171,7 @@ SizedBox(height: 70,),
         color: Color.fromARGB(255, 24, 24, 26),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
-          }, icon: Icon(Icons.info, color: Colors.white, size: 40,)),
+          }, icon: Icon(Icons.house, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
             if(savedName == null || savedId == null){
 

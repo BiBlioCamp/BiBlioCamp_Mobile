@@ -22,6 +22,6 @@ public interface AlocRepository extends JpaRepository<Aloc, Integer> {
     List<String> findBookInPosse(int id);
 
     @Modifying
-    @Query("delete from Aloc c where c.userId = ?1 and c.bookId = ?2")
+    @Query("delete from Aloc c where c.userId = ?1 and c.bookId = ?2 and c.status = 'retirar'")
     void deleteByIds(int userId, int bookId);
 }

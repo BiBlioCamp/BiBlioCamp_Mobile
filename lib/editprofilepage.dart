@@ -27,18 +27,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String? savedName;
   String? savedId;
 
-  
-
   Future<void> _showErrorDialog(String message) async {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Erro'),
-          content: Text(message),
+          backgroundColor: Colors.black87,
+          title: Text('Erro', style: TextStyle(color: Colors.white)),
+          content: Text(message, style: TextStyle(color: Colors.white)),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.white)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -56,27 +55,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Excluir Conta'),
+          backgroundColor: Colors.black87,
+          title: Text('Excluir Conta', style: TextStyle(color: Colors.redAccent)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita."),
+              Text("Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.", style: TextStyle(color: Colors.redAccent)),
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(labelText: "Senha Atual"),
+                decoration: InputDecoration(labelText: "Senha Atual", labelStyle: TextStyle(color: Colors.redAccent)),
+                style: TextStyle(color: Colors.redAccent),
               ),
             ],
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancelar'),
+              child: Text('Cancelar', style: TextStyle(color: Colors.redAccent)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Excluir'),
+              child: Text('Excluir', style: TextStyle(color: Colors.redAccent)),
               onPressed: () {
                 _deleteAccount(_passwordController.text);
               },
@@ -143,74 +144,88 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Editar Perfil")),
-      body: Padding(
+      backgroundColor: Color.fromRGBO(29, 27, 49, 1),
+      appBar: AppBar(
+        title: Text("Editar Perfil", style: TextStyle(color: Colors.white),),
+        leading: IconButton(onPressed: () {
+          Navigator.pop(context);
+        }, icon: Icon(Icons.arrow_back, color: Colors.white,)),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 40, 38, 70),
+      ),
+      body: SingleChildScrollView(child: 
+      Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: "Nome"),
+              decoration: InputDecoration(
+                labelText: "Nome",
+                labelStyle: TextStyle(color: Colors.white),
+              ),
+              style: TextStyle(color: Colors.white),
             ),
             SizedBox(height: 20),
             SizedBox(
-            height: 50,
-            width: 200,
-            child: ElevatedButton(style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.green,
-              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
+              height: 50,
+              width: 200,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.green,
+                  textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  setState(() {});
+                  _saveProfileChanges();
+                },
+                child: Text("Salvar Alterações"),
+              ),
             ),
-              onPressed: () {
-                setState(() {
-                  
-                });
-                _saveProfileChanges();
-              },
-              child: Text("Salvar Alterações")),
-          ),
             SizedBox(height: 20),
             SizedBox(
-            height: 50,
-            width: 200,
-            child: ElevatedButton(style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.red,
-              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
+              height: 50,
+              width: 200,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.red,
+                  textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  setState(() {});
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChangePasswordPage(userId: widget.account.id),
+                    ),
+                  );
+                },
+                child: Text("Alterar Senha"),
+              ),
             ),
-              onPressed: () {
-                setState(() {
-                  
-                });
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ChangePasswordPage(userId: widget.account.id),
-                  ),
-                );
-              },
-              child: Text("Alterar Senha")),
-          ),
             SizedBox(height: 20),
             SizedBox(
-            height: 50,
-            width: 200,
-            child: ElevatedButton(style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.red,
-              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
+              height: 50,
+              width: 200,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.red,
+                  textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  setState(() {});
+                  _showConfirmDialog();
+                },
+                child: Text("Excluir Conta"),
+              ),
             ),
-              onPressed: () {
-                setState(() {
-                  
-                });
-               _showConfirmDialog();
-              },
-              child: Text("Excluir Conta")),
-          ),
           ],
         ),
       ),
+      )
     );
   }
 }

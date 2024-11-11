@@ -1,8 +1,10 @@
 import 'package:bbc/alocacoes.dart';
+import 'package:bbc/class/account.dart';
 import 'package:bbc/class/book.dart';
 import 'package:bbc/help.dart';
 import 'package:bbc/index.dart';
 import 'package:bbc/profilepage.dart';
+import 'package:bbc/repository/accountRepository.dart';
 import 'package:bbc/repository/bookRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -24,9 +26,30 @@ class _AcervoState extends State<Acervo> {
   late Future<void> livrosCarregados;
 
   int bookId = 0;
-  String? savedBookId;
   String? savedName;
   String? savedId;
+  String? savedBookId;
+  Account? _account;
+  final AccountRepository _accountRepository = AccountRepository();
+
+  Future<void> _loadSessionData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final id = prefs.getString('id');
+    setState(() {
+      savedName = prefs.getString('name');
+      savedId = prefs.getString('id');
+    });
+  }
+
+  Future<void> _loadAccountData() async {
+    if (savedId != null) {
+      Account? account = await _accountRepository.buscarContaPorId(int.parse(savedId!));
+      setState(() {
+        _account = account;
+        savedName = account?.name;
+      });
+    }
+  }
 
   Future<void> carregaLivros() async {
     try {
@@ -70,14 +93,6 @@ class _AcervoState extends State<Acervo> {
     });
   }
 
-  Future<void> _loadSessionData() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      savedName = prefs.getString('name');
-      savedId = prefs.getString('id');
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -96,11 +111,13 @@ class _AcervoState extends State<Acervo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 17, 16, 29),
       appBar: AppBar(
         leading: Image.asset(
           'assets/images/logobbc.png',
           width: 50,
         ),
+        title: Text("Acervo de livros", style: TextStyle(color: Colors.white),),
         actions: [
           IconButton(
             onPressed: () {
@@ -112,19 +129,29 @@ class _AcervoState extends State<Acervo> {
             icon: Icon(Icons.person, color: Colors.white,),
           ),
         ],
-        backgroundColor: Color.fromARGB(255, 24, 24, 26),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 40, 38, 70),
       ),
-      body: Column(
+            body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
               controller: _searchController,
+              style: TextStyle(color: Colors.white), // Texto no modo escuro
               decoration: InputDecoration(
                 hintText: 'Pesquisar livro',
-                prefixIcon: const Icon(Icons.search),
+                hintStyle: TextStyle(color: Colors.grey), // Cor do texto do placeholder no modo escuro
+                prefixIcon: const Icon(Icons.search, color: Colors.white), // Ícone no modo escuro
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(color: Colors.white), // Borda no modo escuro
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white), // Borda habilitada no modo escuro
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white), // Borda focada no modo escuro
                 ),
               ),
             ),
@@ -136,9 +163,9 @@ class _AcervoState extends State<Acervo> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
-                  return const Center(child: Text("Erro ao carregar livros"));
+                  return const Center(child: Text("Erro ao carregar livros", style: TextStyle(color: Colors.white)));
                 } else if (livrosExibidos.isEmpty) {
-                  return const Center(child: Text("Nenhum livro disponível."));
+                  return const Center(child: Text("Nenhum livro disponível.", style: TextStyle(color: Colors.white)));
                 } else {
                   return GridView.builder(
                     padding: const EdgeInsets.all(16.0),
@@ -174,13 +201,13 @@ class _AcervoState extends State<Acervo> {
                             const SizedBox(height: 10),
                             Text(
                               livro.title,
-                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white), // Texto no modo escuro
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 5),
                             Text(
                               livro.author,
-                              style: const TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 14, color: Colors.white), // Texto no modo escuro
                               textAlign: TextAlign.center,
                             ),
                           ],
@@ -194,32 +221,35 @@ class _AcervoState extends State<Acervo> {
           ),
         ],
       ),
-
-
-
-
-bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         height: 70,
-        color: Color.fromARGB(255, 24, 24, 26),
+        color:Colors.black,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: ((context) => Index())));
-          }, icon: Icon(Icons.info_outlined, color: Colors.white, size: 40,)),
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Index())));
+          }, icon: Icon(Icons.house_outlined, color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            if(savedName == null || savedId == null){
-
-            }else{
-            }
+            
           }, icon: Icon(Icons.book,color: Colors.white, size: 40,)),
           IconButton(onPressed: () {
-            Navigator.push(context,
+            
+              Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => AlocacoesPage())));
+            
           }, icon: Icon(Icons.inbox_outlined,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Help())));
+          }, icon: Icon(Icons.question_mark_rounded,color: Colors.white, size: 40,)),
+          IconButton(onPressed: () {
+            
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Perfil())));
+            
+          }, icon: Icon(Icons.person_outlined,color: Colors.white, size: 40,)),
         ],),
       ),
-
-
-
     );
   }
 
